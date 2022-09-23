@@ -44,7 +44,7 @@ class haloitsm extends webservice
             '&grant_type=client_credentials' .
             '&client_id=' . $CFG->halo_client_id .
             '&client_secret=' . $CFG->halo_client_secret .
-            '&scope=all'
+            '&scope=all';
 
         print_object($data);
 //        $context = stream_context_create($options);
