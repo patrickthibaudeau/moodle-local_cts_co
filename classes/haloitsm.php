@@ -51,15 +51,16 @@ class haloitsm extends webservice
 //            return $result_array->access_token;
 //        }
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$CFG->halo_auth_url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER,$options);
-        curl_setopt($ch, CURLOPT_POST,1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_VERBOSE,true);
-        $result = curl_exec ($ch);
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL,$CFG->halo_auth_url);
+//        curl_setopt($ch, CURLOPT_HTTPHEADER,$options);
+//        curl_setopt($ch, CURLOPT_POST,1);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+//        curl_setopt($ch, CURLOPT_VERBOSE,true);
+//        $result = curl_exec ($ch);
 
+        $result = self::send_curl_request('POST', $options, $CFG->halo_auth_url,$data);
         print_object(json_decode($result));
 
     }
