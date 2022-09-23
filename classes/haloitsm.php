@@ -40,6 +40,7 @@ class haloitsm extends webservice
         ];
 
         $data = http_build_query($data);
+        print_object($data);
 //        $context = stream_context_create($options);
 //        $result = file_get_contents($url, false, $context);
 //        if ($result === FALSE) {
