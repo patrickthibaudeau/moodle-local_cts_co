@@ -36,7 +36,8 @@ class haloitsm extends webservice
 
         $options = [
             "Content-type: application/x-www-form-urlencoded",
-            'Accept: application/form-data'
+            'Accept: application/form-data',
+            'Content: ' . http_build_query($data)
         ];
 
         $data = http_build_query($data);
