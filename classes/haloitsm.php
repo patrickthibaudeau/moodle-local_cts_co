@@ -40,7 +40,12 @@ class haloitsm extends webservice
             'Content: ' . http_build_query($data)
         ];
 
-        $data = http_build_query($data);
+        $data = 'tenant=' . $CFG->halo_tenant .
+            '&grant_type=client_credentials' .
+            '&client_id=' . $CFG->halo_client_id .
+            '&client_secret=' . $CFG->halo_client_secret .
+            '&scope=all'
+
         print_object($data);
 //        $context = stream_context_create($options);
 //        $result = file_get_contents($url, false, $context);
@@ -60,7 +65,7 @@ class haloitsm extends webservice
 //        curl_setopt($ch, CURLOPT_VERBOSE,true);
 //        $result = curl_exec ($ch);
 
-        $result = self::send_curl_request('POST', $options, $CFG->halo_auth_url,$data);
+        $result = self::send_curl_request('POST', $options, $CFG->halo_auth_url, $data);
         print_object(json_decode($result));
 
     }
