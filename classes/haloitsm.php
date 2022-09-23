@@ -15,13 +15,13 @@ class haloitsm extends webservice
     {
         global $CFG;
         // Required connection data for HALO AUTH
-//        $data = [
-//            'tenant' => $CFG->halo_tenant,
-//            'grant_type' => 'client_credentials',
-//            'client_id' => $CFG->halo_client_id,
-//            'client_secret' => $CFG->halo_client_secret,
-//            'scope' => 'all'
-//        ];
+        $data = [
+            'tenant' => $CFG->halo_tenant,
+            'grant_type' => 'client_credentials',
+            'client_id' => $CFG->halo_client_id,
+            'client_secret' => $CFG->halo_client_secret,
+            'scope' => 'all'
+        ];
 //
 //        $url = $CFG->halo_auth_url;
 //        print_object(http_build_query($data));
@@ -42,38 +42,15 @@ class haloitsm extends webservice
 //            return $result_array->access_token;
 //        }
 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$CFG->halo_auth_url);
+        curl_setopt($ch, CURLOPT_POST,1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_VERBOSE,true);
+        $result = curl_exec ($ch);
 
-        $data = [
-            'tenant' => 'yorkutest',
-            'grant_type' => 'client_credentials',
-            'client_id' => '1903f86c-2e4c-4e49-ac7b-8b6b6e0aa54c',
-            'client_secret' => '10392c4c-bf83-4e3f-8349-07e9da700a0f-d317c7cc-99b1-4df0-8e1f-65b34c04a8be',
-            'scope' => 'all'
-        ];
-
-        $url = 'https://yorkutest.haloitsm.com/auth/token';
-
-
-// use key 'http' even if you send the request to https://...
-        $options = array(
-            'http' => array(
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data)
-            )
-        );
-        $context  = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        if ($result === FALSE) { /* Handle error */ echo 'Error';} else {
-//echo "<pre>";
-            $result_array = json_decode($result);
-//print_r($result_array);
-//echo "</pre>";
-
-            $token = $result_array->access_token;
-
-            return $token;
-        }
+        print_object(json_decode($result));
 
     }
 
