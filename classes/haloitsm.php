@@ -35,8 +35,8 @@ class haloitsm extends webservice
         );
 
         $options = [
-            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method' => 'POST',
+            "Content-type: application/x-www-form-urlencoded",
+            'Accept: application/form-data'
         ];
 //        $context = stream_context_create($options);
 //        $result = file_get_contents($url, false, $context);
