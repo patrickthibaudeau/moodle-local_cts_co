@@ -33,6 +33,8 @@ class haloitsm extends webservice
                 'content' => http_build_query($data)
             )
         );
+
+        $options = ["Content-type: application/x-www-form-urlencoded\r\n"];
 //        $context = stream_context_create($options);
 //        $result = file_get_contents($url, false, $context);
 //        if ($result === FALSE) {
