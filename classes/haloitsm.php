@@ -44,7 +44,7 @@ class haloitsm extends webservice
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$CFG->halo_auth_url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER,$options);
+        curl_setopt($ch, CURLOPT_HTTPHEADER,"Content-type: application/x-www-form-urlencoded\r\n");
         curl_setopt($ch, CURLOPT_POST,1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
