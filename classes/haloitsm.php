@@ -22,22 +22,12 @@ class haloitsm extends webservice
             'client_secret' => $CFG->halo_client_secret,
             'scope' => 'all'
         ];
-//
-//        $url = $CFG->halo_auth_url;
-//        print_object(http_build_query($data));
-//        // use key 'http' even if you send the request to https://...
-//        $options = array(
-//            'http' => array(
-//                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-//                'method' => 'POST',
-//                'content' => http_build_query($data)
-//            )
-//        );
+
 
         $options = [
             "Content-type: application/x-www-form-urlencoded",
             'Accept: application/form-data',
-            'Content: ' . http_build_query($data)
+//            'Content: ' . http_build_query($data)
         ];
 
         $data = 'tenant=' . $CFG->halo_tenant .
@@ -46,27 +36,11 @@ class haloitsm extends webservice
             '&client_secret=' . $CFG->halo_client_secret .
             '&scope=all';
 
-        print_object($data);
-//        $context = stream_context_create($options);
-//        $result = file_get_contents($url, false, $context);
-//        if ($result === FALSE) {
-//            return false;
-//        } else {
-//            $result_array = json_decode($result);
-//            return $result_array->access_token;
-//        }
 
-//        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL,$CFG->halo_auth_url);
-//        curl_setopt($ch, CURLOPT_HTTPHEADER,$options);
-//        curl_setopt($ch, CURLOPT_POST,1);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-//        curl_setopt($ch, CURLOPT_VERBOSE,true);
-//        $result = curl_exec ($ch);
 
         $result = self::send_curl_request('POST', $options, $CFG->halo_auth_url, $data);
-        print_object(json_decode($result));
+        $result_array = json_decode($result);
+        return $result_array->access_token;
 
     }
 
