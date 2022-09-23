@@ -14,34 +14,21 @@ class haloitsm extends webservice
     protected function authenticate()
     {
         global $CFG;
-        // Required connection data for HALO AUTH
-        $data = [
-            'tenant' => $CFG->halo_tenant,
-            'grant_type' => 'client_credentials',
-            'client_id' => $CFG->halo_client_id,
-            'client_secret' => $CFG->halo_client_secret,
-            'scope' => 'all'
-        ];
-
-
+        // Set Headers
         $options = [
             "Content-type: application/x-www-form-urlencoded",
-            'Accept: application/form-data',
-//            'Content: ' . http_build_query($data)
+            'Accept: application/form-data'
         ];
-
+        // Set POST data
         $data = 'tenant=' . $CFG->halo_tenant .
             '&grant_type=client_credentials' .
             '&client_id=' . $CFG->halo_client_id .
             '&client_secret=' . $CFG->halo_client_secret .
             '&scope=all';
-
-
-
+        // Authenticate
         $result = self::send_curl_request('POST', $options, $CFG->halo_auth_url, $data);
         $result_array = json_decode($result);
         return $result_array->access_token;
-
     }
 
     /**

@@ -18,13 +18,11 @@ abstract class webservice
         curl_setopt($ch, CURLOPT_URL, $url);
         if (count($headers) > 0) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            //echo '<br> HEADER ADDED<br><br>';
         }
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         if ($method == "POST") {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
-            //echo '<br> POST FIELDS ADDED<br><br>';
         }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
