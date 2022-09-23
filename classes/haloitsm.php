@@ -24,13 +24,13 @@ class haloitsm extends webservice
         ];
 
         $url = $CFG->halo_auth_url;
-        print_object($url);
+        print_object(http_build_query($data));
         // use key 'http' even if you send the request to https://...
         $options = array(
             'http' => array(
                 'header' => "Content-type: application/x-www-form-urlencoded\r\n",
                 'method' => 'POST',
-                'content' => json_encode($data)
+                'content' => http_build_query($data)
             )
         );
         $context = stream_context_create($options);
