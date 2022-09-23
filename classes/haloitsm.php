@@ -22,9 +22,9 @@ class haloitsm extends webservice
             'client_secret' => $CFG->halo_client_secret,
             'scope' => 'all'
         ];
-print_object($data);
-        $url = $CFG->halo_auth_url;
 
+        $url = $CFG->halo_auth_url;
+        print_object($url);
         // use key 'http' even if you send the request to https://...
         $options = array(
             'http' => array(
