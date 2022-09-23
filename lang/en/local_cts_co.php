@@ -1,4 +1,8 @@
 <?php
+$string['api_url'] = 'API URL';
+$string['api_url_help'] = 'Enter the API URL provided by the API application';
+$string['auth_url'] = 'API Authentication URL';
+$string['auth_url_help'] = 'Enter the API Authentication URL provided by the API application';
 $string['client_id'] = 'Client ID';
 $string['client_id_help'] = 'Enter the client ID provided by the API application';
 $string['client_secret'] = 'Client Secret';

@@ -50,6 +50,22 @@ if ($hassiteconfig) {
         '',
         PARAM_TEXT
     ));
+    // Halo Authentication URL
+    $settings->add(new admin_setting_configtext(
+        'halo_auth_url',
+        get_string('auth_url', 'local_cts_co'),
+        get_string('auth_url_help', 'local_cts_co'),
+        '',
+        PARAM_TEXT
+    ));
+    // Halo API URL
+    $settings->add(new admin_setting_configtext(
+        'halo_api_url',
+        get_string('api_url', 'local_cts_co'),
+        get_string('api_url_help', 'local_cts_co'),
+        '',
+        PARAM_TEXT
+    ));
 
 }
 
