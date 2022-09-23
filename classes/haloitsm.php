@@ -27,7 +27,7 @@ class haloitsm extends webservice
         $options = [
             "Content-type: application/x-www-form-urlencoded",
             'Accept: application/form-data',
-            'Content: ' . http_build_query($data)
+//            'Content: ' . http_build_query($data)
         ];
 
         $data = 'tenant=' . $CFG->halo_tenant .
@@ -56,7 +56,7 @@ class haloitsm extends webservice
         $token = $this->authenticate();
         if ($token) {
             $query = http_build_query($params);
-            $request_url = $CFG->halo_api_url . $method . $params;
+            $request_url = $CFG->halo_api_url . $method . $query;
 
             $curl = curl_init($request_url);
             curl_setopt($curl, CURLOPT_URL, $request_url);
