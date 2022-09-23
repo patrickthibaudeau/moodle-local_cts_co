@@ -27,7 +27,7 @@ class haloitsm extends webservice
         $options = [
             "Content-type: application/x-www-form-urlencoded",
             'Accept: application/form-data',
-//            'Content: ' . http_build_query($data)
+            'Content: ' . http_build_query($data)
         ];
 
         $data = 'tenant=' . $CFG->halo_tenant .
