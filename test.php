@@ -16,7 +16,8 @@ $context = context_system::instance();
 //**********************
 echo $OUTPUT->header();
 
-
+$HALO = new haloitsm();
+print_object($HALO->get_users());
 //**********************
 //*** DISPLAY FOOTER ***
 //**********************
