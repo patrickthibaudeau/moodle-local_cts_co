@@ -21,8 +21,6 @@ abstract class webservice
      */
     protected function send_curl_request($method, $headers, $url, $post_fields = '')
     {
-        print_object($url);
-        print_object($headers);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         if (count($headers) > 0) {

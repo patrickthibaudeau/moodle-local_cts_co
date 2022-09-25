@@ -60,7 +60,8 @@ class haloitsm extends webservice
      * @param string $name
      * @return array
      */
-    public function get_users($name) {
+    public function get_users($name)
+    {
         global $CFG;
         return $this->get_data('Users', 'GET', 'search=' . $name . '&site_id=' . $CFG->halo_site_id);
     }
@@ -70,7 +71,8 @@ class haloitsm extends webservice
      * @param $username
      * @return false|mixed
      */
-    public function get_user_by_username($username) {
+    public function get_user_by_username($username)
+    {
         $results = $this->get_users($username);
         $users = $results->users;
         // Only return the user if the login matches the username
@@ -81,5 +83,78 @@ class haloitsm extends webservice
         }
 
         return false;
+    }
+
+    /**
+     * Returns all Ticket Types
+     * @return mixed|void
+     */
+    public function get_ticket_types()
+    {
+        global $CFG;
+        return $this->get_data('TicketType', 'GET', '');
+    }
+
+    /**
+     * Returns Ticket Type object
+     * @param $id
+     * @return mixed|void
+     */
+    public function get_ticket_type($id)
+    {
+        global $CFG;
+        return $this->get_data('TicketType/' . $id, 'GET', '');
+    }
+
+    /**
+     * Returns all Teams
+     * @return mixed|void
+     */
+    public function get_teams()
+    {
+        global $CFG;
+        return $this->get_data('Team', 'GET', '');
+    }
+
+    /**
+     * Returns Team object
+     * @param $id
+     * @return mixed|void
+     */
+    public function get_team($id)
+    {
+        global $CFG;
+        return $this->get_data('Team/' . $id, 'GET', '');
+    }
+
+    public function create_ticket($username, $summary, $details)
+    {
+        global $CFG;
+        $token = $this->authenticate();
+        if ($token) {
+            $headers = array(
+                "Content-type: application/x-www-form-urlencoded",
+                'Accept: application/form-data',
+                "Authorization: Bearer $token",
+            );
+            $user = $this->get_user_by_username($username);
+            $date_occurred = date("Y-d-m\TG:i:s\Z", (time() + 18000));
+            $data = 'dateoccurred=' . $date_occurred;
+            $data .= '&summary=' . $summary;
+            $data .= '&details=' . $details;
+            $data .= '&tickettype_id=29'; // Computers, Printers & Hardware;
+            $data .= '&client_id=' . $user->client_id;
+            $data .= '&client_name=' . $user->client_name;
+            $data .= '&site_id=' . $user->site_id;
+            $data .= '&site_name=' . $user->site_name;
+            $data .= '&user_id=' . $user->id;
+            $data .= '&user_name=' . $user->name;
+            $data .= '&team=105'; // UIT - CTS - Orders/Deployment
+
+            $ticket_id = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Tickets' , $data);
+
+            return $ticket_id;
+        }
+
     }
 }
