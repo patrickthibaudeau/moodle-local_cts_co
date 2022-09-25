@@ -66,6 +66,37 @@ if ($hassiteconfig) {
         '',
         PARAM_TEXT
     ));
+    // Halo Site ID
+    $settings->add(new admin_setting_configtext(
+        'halo_site_id',
+        get_string('site_id', 'local_cts_co'),
+        get_string('site_id_help', 'local_cts_co'),
+        20,
+        PARAM_INT
+    ));
+
+    // Jira Settings
+    $settings->add(new admin_setting_heading(
+        'jira_setting',
+        get_string('jira_settings', 'local_cts_co'),
+        ''
+    ));
+    // Jira personal access token
+    $settings->add(new admin_setting_configtext(
+        'jira_personal_access_token',
+        get_string('personal_access_token', 'local_cts_co'),
+        get_string('personal_access_token_help', 'local_cts_co'),
+        '',
+        PARAM_TEXT
+    ));
+    // Jira API URL
+    $settings->add(new admin_setting_configtext(
+        'jira_api_url',
+        get_string('api_url', 'local_cts_co'),
+        get_string('api_url_help', 'local_cts_co'),
+        '',
+        PARAM_TEXT
+    ));
 
 }
 

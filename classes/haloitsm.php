@@ -32,40 +32,54 @@ class haloitsm extends webservice
     }
 
     /**
-     * Returns API response
+     * Retrieve data from the API
+     * @param $function
      * @param $method
      * @param $params
-     * @return bool|string|void
+     * @return mixed|void
      */
-    protected function get_data($method, $params = [])
+    protected function get_data($function, $method = 'GET', $params = '')
     {
         global $CFG;
         $token = $this->authenticate();
         if ($token) {
-            $query = http_build_query($params);
-            $request_url = $CFG->halo_api_url . $method . $query;
-
-            $curl = curl_init($request_url);
-            curl_setopt($curl, CURLOPT_URL, $request_url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
             $headers = array(
                 "Accept: application/json",
                 "Authorization: Bearer $token",
             );
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-//for debug only!
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-            $response = curl_exec($curl);
-            curl_close($curl);
-            // Return object
-            return json_decode($response);
+            $request_url = $CFG->halo_api_url . $function . '?' . $params;
+            $result = self::send_curl_request($method, $headers, $request_url, $params);
+
+            return json_decode($result);
         }
     }
 
-    public function get_users() {
-        return $this->get_data('Users', []);
+    /**
+     * Returns all users based on name entered
+     * @param string $name
+     * @return array
+     */
+    public function get_users($name) {
+        global $CFG;
+        return $this->get_data('Users', 'GET', 'search=' . $name . '&site_id=' . $CFG->halo_site_id);
+    }
+
+    /**
+     * Returns user object based on username
+     * @param $username
+     * @return false|mixed
+     */
+    public function get_user_by_username($username) {
+        $results = $this->get_users($username);
+        $users = $results->users;
+        // Only return the user if the login matches the username
+        foreach ($users as $user) {
+            if ($user->login == $username) {
+                return $user;
+            }
+        }
+
+        return false;
     }
 }
