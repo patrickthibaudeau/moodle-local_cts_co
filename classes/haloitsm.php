@@ -127,6 +127,27 @@ class haloitsm extends webservice
         return $this->get_data('Team/' . $id, 'GET', '');
     }
 
+    /**
+     * Returns all Statuses
+     * @return mixed|void
+     */
+    public function get_statuses()
+    {
+        global $CFG;
+        return $this->get_data('Status', 'GET', '');
+    }
+
+    /**
+     * Returns Status object
+     * @param $id
+     * @return mixed|void
+     */
+    public function get_status($id)
+    {
+        global $CFG;
+        return $this->get_data('Status/' . $id, 'GET', '');
+    }
+
     public function create_ticket($username, $summary, $details)
     {
         global $CFG;
@@ -138,11 +159,12 @@ class haloitsm extends webservice
                 "Authorization: Bearer $token",
             );
             $user = $this->get_user_by_username($username);
-            $date_occurred = date("Y-d-m\TG:i:s\Z", (time() + 18000));
+            $date_occurred = date("Y-d-m\TH:i:s\Z", (time() + 18000));
             $data = 'dateoccurred=' . $date_occurred;
             $data .= '&summary=' . $summary;
             $data .= '&details=' . $details;
             $data .= '&tickettype_id=29'; // Computers, Printers & Hardware;
+            $data .= '&status_id=1';
             $data .= '&client_id=' . $user->client_id;
             $data .= '&client_name=' . $user->client_name;
             $data .= '&site_id=' . $user->site_id;
@@ -150,11 +172,12 @@ class haloitsm extends webservice
             $data .= '&user_id=' . $user->id;
             $data .= '&user_name=' . $user->name;
             $data .= '&team=105'; // UIT - CTS - Orders/Deployment
-
+            $data .= '&category_1=7'; // UIT - CTS - Orders/Deployment
+            $data .= '&category_2=178'; // UIT - CTS - Orders/Deployment
+            print_object($data);
             $ticket_id = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Tickets' , $data);
 
             return $ticket_id;
         }
-
     }
 }
