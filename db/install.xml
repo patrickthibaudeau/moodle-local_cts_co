@@ -33,6 +33,9 @@
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_request_id" UNIQUE="false" FIELDS="request_id"/>
+      </INDEXES>
     </TABLE>
   </TABLES>
 </XMLDB>

@@ -62,5 +62,19 @@ function xmldb_local_cts_co_upgrade($oldversion)
         upgrade_plugin_savepoint(true, 2022092600, 'local', 'cts_co');
     }
 
+    if ($oldversion < 2022092601) {
+
+        // Define index idx_request_id (not unique) to be added to cts_co_status.
+        $table = new xmldb_table('cts_co_status');
+        $index = new xmldb_index('idx_request_id', XMLDB_INDEX_NOTUNIQUE, ['request_id']);
+
+        // Conditionally launch add index idx_request_id.
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+
+        // Cts_co savepoint reached.
+        upgrade_plugin_savepoint(true, 2022092601, 'local', 'cts_co');
+    }
     return true;
 }
