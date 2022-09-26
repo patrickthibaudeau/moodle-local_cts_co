@@ -25,7 +25,9 @@ class update_status extends \core\task\scheduled_task {
         $sql = "SELECT id,jira_issue_key FROM {cts_co_request} WHERE latest_status !='Completed'";
         $results = $DB->get_recordset_sql($sql);
         foreach($results as $r) {
-            $STATUS->update_status($r->id, $r->jira_issue_key);
+            if ($r->jira_issue_key) {
+                $STATUS->update_status($r->id, $r->jira_issue_key);
+            }
         }
     }
 
