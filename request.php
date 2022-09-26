@@ -22,7 +22,7 @@ $formdata = new stdClass();
 $mform = new \local_cts_co\request_form(null, array('formdata' => $formdata));
 if ($mform->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
-    redirect($CFG->wwwroot . '/local/cts_co/admin/index.php');
+    redirect($CFG->wwwroot . '/local/cts_co/index.php');
 } else if ($data = $mform->get_data()) {
     // Set objects for HALO and JIRA
     $HALO = new haloitsm();
@@ -48,7 +48,7 @@ if ($mform->is_cancelled()) {
 
     // Create request record
     $params = new stdClass();
-    $params->userid = $USER->id;
+    $params->userid = $data->userid;
     $params->summary = $summary;
     $params->description = $description;
     $params->halo_ticket_id = $new_ticket->id;
@@ -59,7 +59,7 @@ if ($mform->is_cancelled()) {
 
     $REQUEST->insert_record($params);
 
-    redirect($CFG->wwwroot . '/local/cts_co/admin/index.php');
+    redirect($CFG->wwwroot . '/local/cts_co/index.php');
 } else {
     $mform->set_data($mform);
 }

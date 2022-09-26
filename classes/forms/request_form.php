@@ -19,11 +19,21 @@ class request_form extends \moodleform
         // Create form object
         $mform = &$this->_form;
 
+        $user_options = [
+            'multiple' => true,
+            'ajax' => 'local_cts_co/user_selector',
+            'noselectionstring' => get_string('user')
+        ];
+
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
 
         //Header: General
         $mform->addElement('header', 'request_data', get_string('request_header', 'local_cts_co'));
+
+        // Request for : userid
+        $mform->addElement('autocomplete', 'userid', get_string('requested_for', 'local_cts_co'), [], $user_options);
+        $mform->setType('userid', PARAM_INT);
 
         $mform->addElement('editor', 'description_editor', get_string('description','local_cts_co' ));
         $mform->addHelpButton('description_editor', 'description', 'local_cts_co');

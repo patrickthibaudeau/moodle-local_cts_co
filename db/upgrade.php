@@ -76,5 +76,20 @@ function xmldb_local_cts_co_upgrade($oldversion)
         // Cts_co savepoint reached.
         upgrade_plugin_savepoint(true, 2022092601, 'local', 'cts_co');
     }
+
+    if ($oldversion < 2022092607) {
+
+        // Define field latest_status to be added to cts_co_request.
+        $table = new xmldb_table('cts_co_request');
+        $field = new xmldb_field('latest_status', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'jira_issue_url');
+
+        // Conditionally launch add field latest_status.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Cts_co savepoint reached.
+        upgrade_plugin_savepoint(true, 2022092607, 'local', 'cts_co');
+    }
     return true;
 }

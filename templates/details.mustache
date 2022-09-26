@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row mt-2">
+        <div class="col">
+            <div class="float-left">
+                <a href="index.php" title="{{#str}}home, local_cts_co{{/str}}"
+                   class="btn btn-lg btn-outline-primary">
+                    {{#str}}home, local_cts_co{{/str}}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="mb-3">{{#str}}details, local_cts_co{{/str}}</h3>
+                    <b>{{#str}}requested_for, local_cts_co{{/str}}:</b> {{for_user}}<br>
+                    <b>{{#str}}requested_by, local_cts_co{{/str}}:</b> {{by_user}}<br>
+                    <b>{{#str}}date_requested, local_cts_co{{/str}}:</b> {{timecreated}}<br>
+                    <h5 class="mt-2">{{#str}}request, local_cts_co{{/str}}</h5>
+                    <p>
+                        {{{description}}}
+                    </p>
+                    <h3 class="mb-3">{{#str}}timeline, local_cts_co{{/str}}</h3>
+                    <input type="hidden" id="timeline" value="{{timeline}}">
+                    <div id="my-timeline"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

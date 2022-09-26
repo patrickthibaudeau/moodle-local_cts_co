@@ -40,10 +40,10 @@ class status
      * @param $request_id
      * @return void
      */
-    public function get_statuses($request_id) {
+    public function get_statuses($request_id, $order_direction) {
         global $DB;
 
-        $results = $DB->get_records($this->table, ['request_id' => $request_id], 'timecreated DESC');
+        $results = $DB->get_records($this->table, ['request_id' => $request_id], 'timecreated ' . $order_direction);
         $results = array_values($results);
 
         return $results;
