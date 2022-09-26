@@ -100,8 +100,8 @@ class request
                     u.lastname,
                     u.email
                 From
-                    moodle.mdl_cts_co_request r Inner Join
-                    moodle.mdl_user u On u.id = r.userid
+                    {cts_co_request} r Inner Join
+                    {mdl_user} u On u.id = r.userid
                 Where
                     (r.userid = $USER->id Or
                     r.usermodified = $USER->id)";
