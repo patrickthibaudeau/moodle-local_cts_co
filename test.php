@@ -21,10 +21,10 @@ $HALO = new haloitsm();
 $JIRA = new jira();
 
 
-print_object($JIRA->get_issue('CTSCO-2'));
+print_object($JIRA->get_issue('YULRN-49'));
 //$user = $HALO->get_user_by_username('jelder');
 //print_object($HALO->get_ticket_type(29));
-print_object($HALO->create_ticket('thibaud', 'New computer', 'I need a new computer<br>MacBook Pro 14'));
+//print_object($HALO->create_ticket('thibaud', 'New computer', 'I need a new computer<br>MacBook Pro 14'));
 
 
 //**********************

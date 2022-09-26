@@ -47,29 +47,31 @@ class jira extends webservice
     public function get_issue($issue_id)
     {
         global $CFG;
-        $jira_issue = $this->get_data('issue/', 'GET', $issue_id);
-//print_object($jira_issue);
-        $issue = new \stdClass();
-        $issue->id = $jira_issue->id;
-        $issue->key = $jira_issue->key;
-        $issue->summary = $jira_issue->fields->summary;
-        $issue->description = $jira_issue->fields->description;
-        $issue->lastviewed = strtotime($jira_issue->fields->lastViewed);
-        $issue->created = strtotime($jira_issue->fields->created);
-        $issue->updated = strtotime($jira_issue->fields->updated);
-        $issue->lastviewed_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->lastViewed));
-        $issue->created_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->created));
-        $issue->updated_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->updated));
-        $issue->project = new \stdClass();
-        $issue->project->id = $jira_issue->fields->project->id;
-        $issue->project->key = $jira_issue->fields->project->key;
-        $issue->project->name = $jira_issue->fields->project->name;
-        $issue->project->name = $jira_issue->fields->project->name;
-        $issue->priority = $jira_issue->fields->priority->name;
-        $issue->status = $jira_issue->fields->status->name;
-        $issue->comments = $jira_issue->fields->comment->comments;
-        $issue->worklog = $jira_issue->fields->worklog;
+        if ($jira_issue = $this->get_data('issue/', 'GET', $issue_id)) {
+            //print_object($jira_issue);
+            $issue = new \stdClass();
+            $issue->id = $jira_issue->id;
+            $issue->key = $jira_issue->key;
+            $issue->summary = $jira_issue->fields->summary;
+            $issue->description = $jira_issue->fields->description;
+            $issue->lastviewed = strtotime($jira_issue->fields->lastViewed);
+            $issue->created = strtotime($jira_issue->fields->created);
+            $issue->updated = strtotime($jira_issue->fields->updated);
+            $issue->lastviewed_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->lastViewed));
+            $issue->created_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->created));
+            $issue->updated_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->updated));
+            $issue->project = new \stdClass();
+            $issue->project->id = $jira_issue->fields->project->id;
+            $issue->project->key = $jira_issue->fields->project->key;
+            $issue->project->name = $jira_issue->fields->project->name;
+            $issue->project->name = $jira_issue->fields->project->name;
+            $issue->priority = $jira_issue->fields->priority->name;
+            $issue->status = $jira_issue->fields->status->name;
+            $issue->comments = $jira_issue->fields->comment->comments;
+            $issue->worklog = $jira_issue->fields->worklog;
 
-        return $issue;
+            return $issue;
+        }
+
     }
 }
