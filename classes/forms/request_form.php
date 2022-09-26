@@ -35,6 +35,11 @@ class request_form extends \moodleform
         $mform->addElement('autocomplete', 'userid', get_string('requested_for', 'local_cts_co'), [], $user_options);
         $mform->setType('userid', PARAM_INT);
 
+        // Summary
+        $mform->addElement('text', 'summary', get_string('summary', 'local_cts_co'), '');
+        $mform->addHelpButton('summary', 'summary', 'local_cts_co');
+        $mform->setType('summary', PARAM_TEXT);
+
         $mform->addElement('editor', 'description_editor', get_string('description','local_cts_co' ));
         $mform->addHelpButton('description_editor', 'description', 'local_cts_co');
         $mform->setType('description_editor', PARAM_RAW);

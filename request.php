@@ -29,11 +29,11 @@ if ($mform->is_cancelled()) {
     $JIRA = new jira();
     $REQUEST = new request();
 
-    $summary = get_string('new_computer_request', 'local_cts_co');
+
     $description = $data->description_editor['text'];
 
     // Create HALO ticket
-    $new_ticket = $HALO->create_ticket($USER->username, $summary, $description);
+    $new_ticket = $HALO->create_ticket($USER->username, $data->summary, $description);
 
     // Remove HTML tags for JIRA
     $jira_description = str_replace('<br>', "\n", $description);
@@ -44,12 +44,12 @@ if ($mform->is_cancelled()) {
     $jira_description .= "\n\nHalo Ticket ID: " . $new_ticket->id;
     $jira_description = strip_tags($jira_description);
     // Create JIRA issue
-    $new_jira_issue = $JIRA->create_issue($summary, $jira_description);
+    $new_jira_issue = $JIRA->create_issue($data->summary, $jira_description);
 
     // Create request record
     $params = new stdClass();
     $params->userid = $data->userid;
-    $params->summary = $summary;
+    $params->summary = $data->summary;
     $params->description = $description;
     $params->halo_ticket_id = $new_ticket->id;
     $params->jira_issue_id = $new_jira_issue->id;

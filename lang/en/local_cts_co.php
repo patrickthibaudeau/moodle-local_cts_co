@@ -27,6 +27,8 @@ $string['requested_for'] = 'Requested for';
 $string['site_id'] = 'Site ID';
 $string['site_id_help'] = 'Limit User search results based on site id. (Default Employees = 20) Enter 0 for all sites.';
 $string['status'] = 'Status';
+$string['summary'] = 'Summary';
+$string['summary_help'] = 'Enter a short description for your request. Example: Computer order for employee';
 $string['tenant'] = 'Tenant';
 $string['tenant_help'] = 'tenant provided by HALO ITSM';
 $string['timeline'] = 'Status timeline';
