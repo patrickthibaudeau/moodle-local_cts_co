@@ -101,7 +101,7 @@ class request
                     u.email
                 From
                     {cts_co_request} r Inner Join
-                    {mdl_user} u On u.id = r.userid
+                    {user} u On u.id = r.userid
                 Where
                     (r.userid = $USER->id Or
                     r.usermodified = $USER->id)";
