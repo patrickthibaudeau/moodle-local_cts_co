@@ -18,6 +18,7 @@ $context = CONTEXT_SYSTEM::instance();
 require_login(1, false);
 
 $formdata = new stdClass();
+$formdata->userid = [$USER->id => fullname($USER) . '(' . $USER->email . ')'];
 
 $mform = new \local_cts_co\request_form(null, array('formdata' => $formdata));
 if ($mform->is_cancelled()) {
@@ -28,7 +29,6 @@ if ($mform->is_cancelled()) {
     $HALO = new haloitsm();
     $JIRA = new jira();
     $REQUEST = new request();
-
 
     $description = $data->description_editor['text'];
 

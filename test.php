@@ -4,6 +4,7 @@ require_once('../../config.php');
 
 use local_cts_co\haloitsm;
 use local_cts_co\jira;
+use local_cts_co\status;
 
 // CHECK And PREPARE DATA
 global $CFG, $OUTPUT, $SESSION, $PAGE, $DB, $COURSE, $USER;
@@ -19,6 +20,7 @@ echo $OUTPUT->header();
 
 $HALO = new haloitsm();
 $JIRA = new jira();
+$STATUS = new status();
 
 
 //print_object($JIRA->get_issue('CTSCO-2'));
@@ -36,6 +38,7 @@ $JIRA = new jira();
 //$new_jira_issue = $JIRA->create_issue($new_ticket->summary, $jira_description);
 //print_object($new_jira_issue);
 
+$STATUS->update_status(3, 'CTSCO-7');
 
 //**********************
 //*** DISPLAY FOOTER ***

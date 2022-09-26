@@ -20,7 +20,7 @@ class request_form extends \moodleform
         $mform = &$this->_form;
 
         $user_options = [
-            'multiple' => true,
+            'multiple' => false,
             'ajax' => 'local_cts_co/user_selector',
             'noselectionstring' => get_string('user')
         ];
@@ -39,10 +39,12 @@ class request_form extends \moodleform
         $mform->addElement('text', 'summary', get_string('summary', 'local_cts_co'), '');
         $mform->addHelpButton('summary', 'summary', 'local_cts_co');
         $mform->setType('summary', PARAM_TEXT);
+        $mform->addRule('summary', get_string('required_field', 'local_cts_co'), 'required');
 
         $mform->addElement('editor', 'description_editor', get_string('description','local_cts_co' ));
         $mform->addHelpButton('description_editor', 'description', 'local_cts_co');
         $mform->setType('description_editor', PARAM_RAW);
+        $mform->addRule('description_editor', get_string('required_field', 'local_cts_co'), 'required');
 
         $this->add_action_buttons();
         $this->set_data($formdata);

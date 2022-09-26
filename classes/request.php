@@ -50,6 +50,7 @@ class request
 
         $data->timecreated = $timecreated;
         $data->timemodified = $timemodified;
+        $data->latest_status = 'New request';
 
         if ($id = $DB->insert_record($this->table, $data)) {
             // Create status record.
@@ -57,7 +58,7 @@ class request
 
             $status_data = new \stdClass();
             $status_data->request_id = $id;
-            $status_data->status = 'New';
+            $status_data->status = 'New request';
 
             $STATUS->insert_record($status_data);
 
