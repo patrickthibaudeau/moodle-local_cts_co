@@ -74,4 +74,35 @@ class jira extends webservice
         }
 
     }
+
+    public function create_issue($summary, $description) {
+        global $CFG;
+
+        $token = $this->authenticate();
+
+        $data = [
+            'fields' => [
+                'project' => [
+                    'key' => 'CTSCO'
+                ],
+                'summary' => $summary,
+                'description' => $description,
+                'issuetype' => [
+                    'name' => 'Request'
+                ]
+            ]
+        ];
+
+        $data = json_encode($data);
+
+        $headers = array(
+            "Content-type: application/json",
+            'Accept: application/json',
+            "Authorization: Bearer $token",
+        );
+
+        $new_issue = self::send_curl_request('POST', $headers, $CFG->jira_api_url . 'issue/', $data);
+
+        return json_decode($new_issue);
+    }
 }
