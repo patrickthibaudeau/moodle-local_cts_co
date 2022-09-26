@@ -152,32 +152,36 @@ class haloitsm extends webservice
     {
         global $CFG;
         $token = $this->authenticate();
+
+        $user = $this->get_user_by_username($username);
+
         if ($token) {
+            $data = [
+                'summary' => $summary,
+                'details' => $details,
+                'tickettype_id' => 29, // Computers, Printers  Hardware;
+                'status_id' => 1,
+                'client_id' => $user->client_id,
+                'client_name' => $user->client_name,
+                'site_id' => $user->site_id,
+                'site_name' => $user->site_name,
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'team' => 'UIT - CTS - Orders/Deployment',
+                'category_3' => 'Hardware>Purchase - Quotation', // UIT - CTS - Orders/Deployment
+            ];
+
+            $data = "[" . json_encode($data) . "]";
+
             $headers = array(
-                "Content-type: application/x-www-form-urlencoded",
-                'Accept: application/form-data',
+                "Content-type: application/json",
+                'Accept: application/json',
                 "Authorization: Bearer $token",
             );
-            $user = $this->get_user_by_username($username);
-            $date_occurred = date("Y-d-m\TH:i:s\Z", (time() + 18000));
-            $data = 'dateoccurred=' . $date_occurred;
-            $data .= '&summary=' . $summary;
-            $data .= '&details=' . $details;
-            $data .= '&tickettype_id=29'; // Computers, Printers & Hardware;
-            $data .= '&status_id=1';
-            $data .= '&client_id=' . $user->client_id;
-            $data .= '&client_name=' . $user->client_name;
-            $data .= '&site_id=' . $user->site_id;
-            $data .= '&site_name=' . $user->site_name;
-            $data .= '&user_id=' . $user->id;
-            $data .= '&user_name=' . $user->name;
-            $data .= '&team=105'; // UIT - CTS - Orders/Deployment
-            $data .= '&category_1=7'; // UIT - CTS - Orders/Deployment
-            $data .= '&category_2=178'; // UIT - CTS - Orders/Deployment
-            print_object($data);
-            $ticket_id = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Tickets' , $data);
 
-            return $ticket_id;
+            $new_ticket = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Tickets', $data);
+
+            return json_decode($new_ticket);
         }
     }
 }
