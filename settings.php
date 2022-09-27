@@ -97,6 +97,14 @@ if ($hassiteconfig) {
         '',
         PARAM_TEXT
     ));
+    // Jira Project Key
+    $settings->add(new admin_setting_configtext(
+        'jira_project_key',
+        get_string('project_key', 'local_cts_co'),
+        get_string('project_key_help', 'local_cts_co'),
+        '',
+        PARAM_TEXT
+    ));
 
 }
 

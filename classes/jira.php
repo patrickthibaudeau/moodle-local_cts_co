@@ -83,7 +83,7 @@ class jira extends webservice
         $data = [
             'fields' => [
                 'project' => [
-                    'key' => 'CTSCO'
+                    'key' => $CFG->jira_project_key
                 ],
                 'summary' => $summary,
                 'description' => $description,
