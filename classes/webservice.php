@@ -37,4 +37,26 @@ abstract class webservice
         curl_close($ch);
         return $result;
     }
+
+    /**
+     * Return header array for GET or POST
+     * @param $method default 'GET' Available 'POST'
+     * @param $token
+     * @return string[]
+     */
+    protected function get_headers($method = 'GET', $token) {
+        if ($method == 'GET') {
+            $headers = array(
+                "Accept: application/json",
+                "Authorization: Bearer $token",
+            );
+        } else {
+            $headers = array(
+                "Content-type: application/json",
+                'Accept: application/json',
+                "Authorization: Bearer $token",
+            );
+        }
+        return $headers;
+    }
 }

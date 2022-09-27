@@ -24,7 +24,7 @@ $STATUS = new status();
 
 
 //print_object($JIRA->get_issue('CTSCO-8'));
-print_object($HALO->get_user_by_username('jelder'));
+print_object($HALO->get_user_by_username('thibaud'));
 //print_object($HALO->get_ticket_type(29));
 //$new_ticket = $HALO->create_ticket('aalaily', 'New computer request', "I need a new computer<br>MacBook Pro 14");
 

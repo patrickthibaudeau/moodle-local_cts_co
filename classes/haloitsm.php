@@ -43,11 +43,7 @@ class haloitsm extends webservice
         global $CFG;
         $token = $this->authenticate();
         if ($token) {
-            $headers = array(
-                "Accept: application/json",
-                "Authorization: Bearer $token",
-            );
-
+            $headers = self::get_headers('GET', $token);
             $request_url = $CFG->halo_api_url . $function . '?' . $params;
             $result = self::send_curl_request($method, $headers, $request_url, $params);
 
@@ -173,12 +169,7 @@ class haloitsm extends webservice
 
             $data = "[" . json_encode($data) . "]";
 
-            $headers = array(
-                "Content-type: application/json",
-                'Accept: application/json',
-                "Authorization: Bearer $token",
-            );
-
+            $headers = self::get_headers('POST', $token);
             $new_ticket = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Tickets', $data);
 
             return json_decode($new_ticket);

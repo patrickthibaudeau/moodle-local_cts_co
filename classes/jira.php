@@ -27,11 +27,7 @@ class jira extends webservice
         global $CFG;
         $token = $this->authenticate();
         if ($token) {
-            $headers = array(
-                "Accept: application/json",
-                "Authorization: Bearer $token",
-            );
-
+            $headers = self::get_headers('GET', $token);
             $request_url = $CFG->jira_api_url . $function . $params;
             $result = self::send_curl_request($method, $headers, $request_url, $params);
 
@@ -95,11 +91,7 @@ class jira extends webservice
 
         $data = json_encode($data);
 
-        $headers = array(
-            "Content-type: application/json",
-            'Accept: application/json',
-            "Authorization: Bearer $token",
-        );
+        $headers = self::get_headers('POST', $token);
 
         $new_issue = self::send_curl_request('POST', $headers, $CFG->jira_api_url . 'issue/', $data);
 
