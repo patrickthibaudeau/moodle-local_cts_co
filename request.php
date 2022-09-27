@@ -29,6 +29,10 @@ if ($mform->is_cancelled()) {
     $HALO = new haloitsm();
     $JIRA = new jira();
     $REQUEST = new request();
+    // Make sure a userid is set
+    if (!$data->userid) {
+        $data->userid = $USER->id;
+    }
 
     $description = $data->description_editor['text'];
 
@@ -36,8 +40,8 @@ if ($mform->is_cancelled()) {
     $new_ticket = $HALO->create_ticket($USER->username, $data->summary, $description);
 
     // Remove HTML tags for JIRA
-    $jira_description = str_replace('<br>', "\n", $description);
-    $jira_description = str_replace('<p>', "\n\n", $description);
+    $jira_description = str_replace('<br>', "\n\n", $description);
+    $jira_description = str_replace('<p>', "\n\n\n\n", $description);
     $jira_description = str_replace('</p>', "", $description);
 
     // Add HALO Ticket ID to JIRA description
