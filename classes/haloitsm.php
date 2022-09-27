@@ -155,7 +155,7 @@ class haloitsm extends webservice
 
         $user = $this->get_user_by_username($username);
 
-        if ($token) {
+        if ($token && is_object($user)) {
             $data = [
                 'summary' => $summary,
                 'details' => $details,
@@ -182,6 +182,8 @@ class haloitsm extends webservice
             $new_ticket = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Tickets', $data);
 
             return json_decode($new_ticket);
+        } else {
+            return false;
         }
     }
 }

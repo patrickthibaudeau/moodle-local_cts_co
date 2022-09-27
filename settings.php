@@ -105,6 +105,15 @@ if ($hassiteconfig) {
         '',
         PARAM_TEXT
     ));
+    // Jira Issue type
+    $settings->add(new admin_setting_configtext(
+        'jira_issue_type',
+        get_string('issue_type', 'local_cts_co'),
+        get_string('issue_type_help', 'local_cts_co'),
+        'Request',
+        PARAM_TEXT
+    ));
+
 
 }
 
