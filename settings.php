@@ -26,6 +26,14 @@ if ($hassiteconfig) {
         get_string('halo_settings', 'local_cts_co'),
         ''
     ));
+    // Halo Authentication URL
+    $settings->add(new admin_setting_configtext(
+        'halo_url',
+        get_string('halo_url', 'local_cts_co'),
+        get_string('halo_url_help', 'local_cts_co'),
+        '',
+        PARAM_TEXT
+    ));
     // Halo tenant
     $settings->add(new admin_setting_configtext(
         'halo_tenant',
@@ -111,6 +119,13 @@ if ($hassiteconfig) {
         get_string('issue_type', 'local_cts_co'),
         get_string('issue_type_help', 'local_cts_co'),
         'Request',
+        PARAM_TEXT
+    ));
+    $settings->add(new admin_setting_configtext(
+        'jira_board',
+        get_string('jira_board', 'local_cts_co'),
+        get_string('jira_board_help', 'local_cts_co'),
+        '',
         PARAM_TEXT
     ));
 

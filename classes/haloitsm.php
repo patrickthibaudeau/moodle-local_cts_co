@@ -144,6 +144,14 @@ class haloitsm extends webservice
         return $this->get_data('Status/' . $id, 'GET', '');
     }
 
+    /**
+     * Create aticket in HALO
+     * Returns stdClass object
+     * @param $username
+     * @param $summary
+     * @param $details
+     * @return false|mixed
+     */
     public function create_ticket($username, $summary, $details)
     {
         global $CFG;

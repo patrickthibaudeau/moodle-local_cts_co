@@ -34,9 +34,9 @@ echo '<textarea>' . $text . '</textarea>';
 //print_object($JIRA->get_issue('CTSCO-8'));
 //print_object($HALO->get_user_by_username('thibaud'));
 //print_object($HALO->get_ticket_type(29));
-//$new_ticket = $HALO->create_ticket('aalaily', 'New computer request', "I need a new computer<br>MacBook Pro 14");
+$new_ticket = $HALO->create_ticket('thibaud', 'New computer request', "I need a new computer<br>MacBook Pro 14");
 
-
+print_object($new_ticket);
 
 //$jira_description = str_replace('<br>', "\n", $new_ticket->details);
 //$jira_description .= "\n\nHalo Ticket ID: " . $new_ticket->id;
