@@ -3,6 +3,7 @@
 require_once("../../config.php");
 
 require_once($CFG->dirroot . "/local/cts_co/classes/forms/request_form.php");
+require_once($CFG->dirroot . "/local/cts_co/classes/class.html2text.inc");
 
 use local_cts_co\base;
 use local_cts_co\haloitsm;
@@ -40,13 +41,10 @@ if ($mform->is_cancelled()) {
     $new_ticket = $HALO->create_ticket($USER->username, $data->summary, $description);
     if (is_object($new_ticket)) {
         // Remove HTML tags for JIRA
-        $jira_description = str_replace('<br>', "\n\n", $description);
-        $jira_description = str_replace('<p>', "\n\n\n\n", $description);
-        $jira_description = str_replace('</p>', "", $description);
-
+        $H2T = new html2text($description);
+        $jira_description = $H2T->get_text();
         // Add HALO Ticket ID to JIRA description
         $jira_description .= "\n\nHalo Ticket ID: " . $new_ticket->id;
-        $jira_description = strip_tags($jira_description);
         // Create JIRA issue
         $new_jira_issue = $JIRA->create_issue($data->summary, $jira_description);
 

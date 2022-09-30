@@ -1,7 +1,7 @@
 <?php
 
 require_once('../../config.php');
-
+require_once('classes/class.html2text.inc');
 use local_cts_co\haloitsm;
 use local_cts_co\jira;
 use local_cts_co\status;
@@ -22,9 +22,17 @@ $HALO = new haloitsm();
 $JIRA = new jira();
 $STATUS = new status();
 
+$html = '<p dir="ltr" style="text-align: left;">Hello,</p>
+<p dir="ltr" style="text-align: left;">This is what I want to do</p>
+<p dir="ltr" style="text-align: left;">Get thsi stuff<br></p>
+<p dir="ltr" style="text-align: left;"><br></p>';
+
+$H2T = new html2text($html);
+$text = $H2T->get_text();
+echo '<textarea>' . $text . '</textarea>';
 
 //print_object($JIRA->get_issue('CTSCO-8'));
-print_object($HALO->get_user_by_username('thibaud'));
+//print_object($HALO->get_user_by_username('thibaud'));
 //print_object($HALO->get_ticket_type(29));
 //$new_ticket = $HALO->create_ticket('aalaily', 'New computer request', "I need a new computer<br>MacBook Pro 14");
 
