@@ -2,6 +2,8 @@
 
 namespace local_cts_co;
 
+use core\notification;
+
 class status
 {
     /**
@@ -59,25 +61,28 @@ class status
         $JIRA = new jira();
         $issue = $JIRA->get_issue($jira_issue_key);
         // If issue status is not the same as result status, add new status record
-        if ($issue->status != $result->status) {
-            $REQUEST = new request($request_id);
-            $params = new \stdClass();
-            $params->request_id = $request_id;
-            $params->status = $issue->status;
-            $params->timecreated = time();
+        if (isset($issue)) {
+            if ($issue->status != $result->status) {
+                $REQUEST = new request($request_id);
+                $params = new \stdClass();
+                $params->request_id = $request_id;
+                $params->status = $issue->status;
+                $params->timecreated = time();
 
-            $new_status_id = $DB->insert_record('cts_co_status', $params);
-            //Update latest status in request record;
-            $request_params = new \stdClass();
-            $request_params->id = $request_id;
-            $request_params->latest_status = $issue->status;
-            $request_params->timemodified = $params->timecreated;
+                $new_status_id = $DB->insert_record('cts_co_status', $params);
+                //Update latest status in request record;
+                $request_params = new \stdClass();
+                $request_params->id = $request_id;
+                $request_params->latest_status = $issue->status;
+                $request_params->timemodified = $params->timecreated;
 
-            $DB->update_record('cts_co_request', $request_params);
+                $DB->update_record('cts_co_request', $request_params);
 
-            return $new_status_id;
+                return $new_status_id;
+            }
+        } else {
+            notification::error('This record is not aproperly ssocitaed with ticket');
         }
-
         return false;
     }
 
