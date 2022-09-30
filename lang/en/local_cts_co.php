@@ -42,6 +42,7 @@ $string['summary'] = 'Summary';
 $string['summary_help'] = 'Enter a short description for your request. Example: Computer order for employee';
 $string['tenant'] = 'Tenant';
 $string['tenant_help'] = 'tenant provided by HALO ITSM';
+$string['ticket'] = 'Ticket';
 $string['timeline'] = 'Status timeline';
 $string['personal_access_token'] = 'Personal Access Token';
 $string['personal_access_token_help'] = 'Enter the Personal Access Token provided by JIRA.';

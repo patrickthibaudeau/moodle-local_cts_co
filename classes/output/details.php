@@ -67,7 +67,8 @@ class details implements \renderable, \templatable {
             'timecreated' => strftime(get_string('strftimedatetime'),$results->request->timecreated),
             'for_user' => fullname($for_user),
             'by_user' => fullname($by_user),
-            'timeline' => json_encode($timeline)
+            'timeline' => json_encode($timeline),
+            'halo_url' => $CFG->halo_url
         ];
 
         return $data;
