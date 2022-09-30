@@ -169,7 +169,7 @@ class request
      * Returns HALO ticket id
      * @return string
      */
-    public function get_haloo_ticket_id()
+    public function get_halo_ticket_id()
     {
         return $this->record->halo_ticket_id;
     }

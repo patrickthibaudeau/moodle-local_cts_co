@@ -185,4 +185,39 @@ class haloitsm extends webservice
             return false;
         }
     }
+
+    /**
+     * @param $username
+     * @param $ticket_id
+     * @param $note
+     * @return false|mixed
+     */
+    public function add_action($username, $ticket_id, $note)
+    {
+        global $CFG;
+        $token = $this->authenticate();
+        $user = $this->get_user_by_username($username);
+
+        if ($token && is_object($user)) {
+            $data = [
+                'ticket_id' => $ticket_id,
+                'note_html' => $note,
+                'outcome' => "Status updated",
+                'who_agentid' => $user->id,
+                'note' => $note,
+                'emailbody' => $note,
+                'emailsubject' => "Status updated",
+                'emailbody_html' => $note
+            ];
+
+            $data = "[" . json_encode($data) . "]";
+
+            $headers = self::get_headers('POST', $token);
+            $new_ticket = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Actions', $data);
+
+            return json_decode($new_ticket);
+        } else {
+            return false;
+        }
+    }
 }

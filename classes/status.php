@@ -16,7 +16,8 @@ class status
      * @param $id
      * @throws \dml_exception
      */
-    public function __construct() {
+    public function __construct()
+    {
         global $DB;
         $this->table = 'cts_co_status';
     }
@@ -25,7 +26,8 @@ class status
      * @param $data \stdClass
      * @return int
      */
-    public function insert_record($data) {
+    public function insert_record($data)
+    {
         global $DB;
 
         $timecreated = time();
@@ -42,7 +44,8 @@ class status
      * @param $request_id
      * @return void
      */
-    public function get_statuses($request_id, $order_direction) {
+    public function get_statuses($request_id, $order_direction)
+    {
         global $DB;
 
         $results = $DB->get_records($this->table, ['request_id' => $request_id], 'timecreated ' . $order_direction);
@@ -59,6 +62,7 @@ class status
         $result = $DB->get_record_sql($sql, [$request_id]);
         // Get JIRA issue
         $JIRA = new jira();
+        $HALO = new haloitsm();
         $issue = $JIRA->get_issue($jira_issue_key);
         // If issue status is not the same as result status, add new status record
         if (isset($issue)) {
@@ -77,6 +81,13 @@ class status
                 $request_params->timemodified = $params->timecreated;
 
                 $DB->update_record('cts_co_request', $request_params);
+
+                $note = 'Your computer request status has been updated to ' . $issue->status;
+                // create HALO action on ticekt
+                $HALO->add_action(
+                    $issue->agent,
+                    $REQUEST->get_halo_ticket_id(),
+                    $note);
 
                 return $new_status_id;
             }

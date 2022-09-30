@@ -63,6 +63,7 @@ class jira extends webservice
             $issue->project->name = $jira_issue->fields->project->name;
             $issue->priority = $jira_issue->fields->priority->name;
             $issue->status = $jira_issue->fields->status->name;
+            $issue->agent = $jira_issue->fields->reporter->name;
             $issue->comments = $jira_issue->fields->comment->comments;
             $issue->worklog = $jira_issue->fields->worklog;
 

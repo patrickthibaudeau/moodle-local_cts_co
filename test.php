@@ -31,8 +31,8 @@ $H2T = new html2text($html);
 $text = $H2T->get_text();
 echo '<textarea>' . $text . '</textarea>';
 
-print_object($JIRA->get_issue('CTSCO-2'));
-//print_object($HALO->get_user_by_username('thibaud'));
+//print_object($JIRA->get_issue('CTSCO-2'));
+print_object($HALO->add_action('thibaud', '0110043' , 'This is a note'));
 //print_object($HALO->get_ticket_type(29));
 //$new_ticket = $HALO->create_ticket('thibaud', 'New computer request', "I need a new computer<br>MacBook Pro 14");
 
