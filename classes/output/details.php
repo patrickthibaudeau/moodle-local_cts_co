@@ -16,6 +16,7 @@
 namespace local_cts_co\output;
 
 use local_cts_co\request;
+use local_cts_co\status;
 
 class details implements \renderable, \templatable {
 
@@ -40,6 +41,9 @@ class details implements \renderable, \templatable {
         global $USER, $CFG, $DB;
 
         $REQUEST = new request($this->id);
+        $STATUS = new status();
+        // Update status for this record
+        $STATUS->update_status($this->id, $REQUEST->get_jira_issue_key());
 
         $results = $REQUEST->get_request('ASC');
 

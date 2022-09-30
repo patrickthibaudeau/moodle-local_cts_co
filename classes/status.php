@@ -60,6 +60,7 @@ class status
         $issue = $JIRA->get_issue($jira_issue_key);
         // If issue status is not the same as result status, add new status record
         if ($issue->status != $result->status) {
+            $REQUEST = new request($request_id);
             $params = new \stdClass();
             $params->request_id = $request_id;
             $params->status = $issue->status;

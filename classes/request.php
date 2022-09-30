@@ -19,6 +19,7 @@ class request
      */
     private $record;
 
+
     /**
      * If id available, load record
      * @param $id
@@ -139,7 +140,7 @@ class request
         foreach ($requests as $r) {
             $results[$i] = new \stdClass();
             $results[$i]->id = $r->id;
-            $time_created = strftime(get_string('strftimedatetime'),$r->timecreated);
+            $time_created = strftime(get_string('strftimedatetime'), $r->timecreated);
             $results[$i]->timecreated = $time_created;
             $results[$i]->status = $r->status;
             $results[$i]->for_user = $r->firstname . ' ' . $r->lastname;
@@ -152,5 +153,24 @@ class request
         $data->results = $results;
 
         return $data;
+    }
+
+
+    /**
+     * Returns JIRA issue key
+     * @return string
+     */
+    public function get_jira_issue_key()
+    {
+        return $this->record->jira_issue_key;
+    }
+
+    /**
+     * Returns HALO ticket id
+     * @return string
+     */
+    public function get_haloo_ticket_id()
+    {
+        return $this->record->halo_ticket_id;
     }
 }
