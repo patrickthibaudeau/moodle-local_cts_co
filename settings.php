@@ -121,6 +121,15 @@ if ($hassiteconfig) {
         'Request',
         PARAM_TEXT
     ));
+    // Jira URL
+    $settings->add(new admin_setting_configtext(
+        'jira_url',
+        get_string('jira_url', 'local_cts_co'),
+        get_string('jira_url_help', 'local_cts_co'),
+        '',
+        PARAM_TEXT
+    ));
+    // Jira Board ID
     $settings->add(new admin_setting_configtext(
         'jira_board',
         get_string('jira_board', 'local_cts_co'),

@@ -19,8 +19,10 @@ $string['halo_url_help'] = 'Enter the url you would use to login to your HALO ap
 $string['home'] = 'Home';
 $string['issue_type'] = 'Issue type';
 $string['issue_type_help'] = 'Default issue type when creating a Jira issue. Default Request';
-$string['jira_board'] = 'JIRA Board';
-$string['jira_board_help'] = 'Enter the URL to the JIRA Board (Usually a Kanban board)';
+$string['jira_board'] = 'JIRA Board ID';
+$string['jira_board_help'] = 'Enter the JIRA Board ID. You can find it in the link to your board.';
+$string['jira_url'] = 'JIRA URL';
+$string['jira_url_help'] = 'Enter the URL to your JIRA application';
 $string['jira_settings'] = 'JIRA Settings';
 $string['my_requests'] = 'My requests';
 $string['new_request'] = 'New request';
@@ -45,3 +47,8 @@ $string['personal_access_token'] = 'Personal Access Token';
 $string['personal_access_token_help'] = 'Enter the Personal Access Token provided by JIRA.';
 $string['pluginname'] = 'CTS Computer Order System';
 $string['update_status'] = 'CTS Computer Order System - Update Status';
+$string['view_jira_board'] = 'View Board';
+$string['view_ticket'] = 'View Ticket';
+
+// Permissions
+$string['cts_co:access_jira'] = 'Can access JIRA';

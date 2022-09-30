@@ -2,6 +2,12 @@
     <div class="row mt-2">
         <div class="col">
             <div class="float-right">
+                {{#can_access_jira}}
+                    <a href="{{jira_url}}/secure/RapidBoard.jspa?rapidView={{jira_board}}&view=detail" title="{{#str}}view_jira_board, local_cts_co{{/str}}"
+                       class="btn btn-lg btn-outline-primary" target="_blank">
+                        {{#str}}view_jira_board, local_cts_co{{/str}}
+                    </a>
+                {{/can_access_jira}}
                 <a href="request.php" title="{{#str}}new_request, local_cts_co{{/str}}"
                    class="btn btn-lg btn-outline-primary">
                     {{#str}}new_request, local_cts_co{{/str}}
