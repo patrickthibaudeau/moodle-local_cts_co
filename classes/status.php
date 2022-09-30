@@ -67,7 +67,7 @@ class status
                 $params = new \stdClass();
                 $params->request_id = $request_id;
                 $params->status = $issue->status;
-                $params->timecreated = time();
+                $params->timecreated = $issue->updated;
 
                 $new_status_id = $DB->insert_record('cts_co_status', $params);
                 //Update latest status in request record;
