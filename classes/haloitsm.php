@@ -44,7 +44,7 @@ class haloitsm extends webservice
         $token = $this->authenticate();
         if ($token) {
             $headers = self::get_headers('GET', $token);
-            $request_url = $CFG->halo_api_url . $function . '?' . $params;
+            $request_url = $CFG->halo_api_url . $function .  $params;
             $result = self::send_curl_request($method, $headers, $request_url, $params);
 
             return json_decode($result);
@@ -59,7 +59,7 @@ class haloitsm extends webservice
     public function get_users($name)
     {
         global $CFG;
-        return $this->get_data('Users', 'GET', 'search=' . $name . '&site_id=' . $CFG->halo_site_id);
+        return $this->get_data('Users', 'GET', '?search=' . $name . '&site_id=' . $CFG->halo_site_id);
     }
 
     /**
@@ -79,6 +79,17 @@ class haloitsm extends webservice
         }
 
         return false;
+    }
+
+    /**
+     * Returns all users based on name entered
+     * @param string $name
+     * @return array
+     */
+    public function get_ticket($ticket_id)
+    {
+        global $CFG;
+        return $this->get_data('Tickets/', 'GET',  $ticket_id);
     }
 
     /**
@@ -213,9 +224,9 @@ class haloitsm extends webservice
             $data = "[" . json_encode($data) . "]";
 
             $headers = self::get_headers('POST', $token);
-            $new_ticket = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Actions', $data);
+            $new_action = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Actions', $data);
 
-            return json_decode($new_ticket);
+            return json_decode($new_action);
         } else {
             return false;
         }

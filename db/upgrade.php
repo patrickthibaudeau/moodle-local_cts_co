@@ -91,5 +91,20 @@ function xmldb_local_cts_co_upgrade($oldversion)
         // Cts_co savepoint reached.
         upgrade_plugin_savepoint(true, 2022092607, 'local', 'cts_co');
     }
+
+    if ($oldversion < 2022093003) {
+
+        // Define field halo_action_id to be added to cts_co_status.
+        $table = new xmldb_table('cts_co_status');
+        $field = new xmldb_field('halo_action_id', XMLDB_TYPE_INTEGER, '20', null, null, null, '0', 'status');
+
+        // Conditionally launch add field halo_action_id.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Cts_co savepoint reached.
+        upgrade_plugin_savepoint(true, 2022093003, 'local', 'cts_co');
+    }
     return true;
 }
