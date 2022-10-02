@@ -39,7 +39,6 @@ class base
 
         $context = \context_system::instance();
 
-
         $PAGE->set_url($url);
         $PAGE->set_title($pagetitle);
         $PAGE->set_heading($pageheading);

@@ -75,8 +75,10 @@ base::page(
     '/local/cts_co/request.php',
     get_string('request_form', 'local_cts_co'),
     get_string('request_form', 'local_cts_co'),
-    $context
+    $context,
+    'standard'
 );
+
 
 echo $OUTPUT->header();
 //**********************
@@ -84,6 +86,7 @@ echo $OUTPUT->header();
 //
 
 $mform->display();
+
 //**********************
 //*** DISPLAY FOOTER ***
 //**********************
