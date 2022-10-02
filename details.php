@@ -12,7 +12,7 @@ $context = context_system::instance();
 
 $id = required_param('id', PARAM_INT);
 
- \local_cts_co\base::page($CFG->wwwroot . '/local/cto_co/index.php', get_string('pluginname', 'local_cts_co'), get_string('pluginname', 'local_cts_co'), $context);
+ \local_cts_co\base::page($CFG->wwwroot . '/local/cto_co/index.php', get_string('pluginname', 'local_cts_co'), '', $context);
 
  // Load JS
 $PAGE->requires->css('/local/cts_co/css/jquery.roadmap.min.css');
