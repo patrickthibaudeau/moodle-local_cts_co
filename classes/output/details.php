@@ -17,6 +17,7 @@ namespace local_cts_co\output;
 
 use local_cts_co\request;
 use local_cts_co\status;
+use local_cts_co\jira;
 
 class details implements \renderable, \templatable {
 
@@ -42,11 +43,12 @@ class details implements \renderable, \templatable {
 
         $REQUEST = new request($this->id);
         $STATUS = new status();
+        $JIRA = new jira();
         // Update status for this record
         $STATUS->update_status($this->id, $REQUEST->get_jira_issue_key());
 
         $results = $REQUEST->get_request('ASC');
-
+        $issue = $JIRA->get_issue($REQUEST->get_jira_issue_key());
         // Get user information
         $for_user = $DB->get_record('user', ['id' => $results->request->userid]);
         $by_user = $DB->get_record('user', ['id' => $results->request->usermodified]);
@@ -68,7 +70,8 @@ class details implements \renderable, \templatable {
             'for_user' => fullname($for_user),
             'by_user' => fullname($by_user),
             'timeline' => json_encode($timeline),
-            'halo_url' => $CFG->halo_url
+            'halo_url' => $CFG->halo_url,
+            'issue' => $issue
         ];
 
         return $data;

@@ -59,6 +59,11 @@ class jira extends webservice
             $issue->lastviewed_hr = strftime(get_string('strftimedatetime'), strtotime($jira_issue->fields->lastViewed));
             $issue->created_hr = strftime(get_string('strftimedatetime'), strtotime($jira_issue->fields->created));
             $issue->updated_hr = strftime(get_string('strftimedatetime'), strtotime($jira_issue->fields->updated));
+            if ($issue->duedate) {
+                $issue->duedate_hr = strftime(get_string('strftimedate'), $issue->duedate);
+            } else {
+                $issue->duedate_hr = '';
+            }
             $issue->project = new \stdClass();
             $issue->project->id = $jira_issue->fields->project->id;
             $issue->project->key = $jira_issue->fields->project->key;

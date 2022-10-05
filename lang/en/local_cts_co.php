@@ -1,5 +1,6 @@
 <?php
 $string['add'] = 'Add';
+$string['agent'] = 'Agent';
 $string['api_url'] = 'API URL';
 $string['api_url_help'] = 'Enter the API URL provided by the API application';
 $string['auth_url'] = 'API Authentication URL';
@@ -13,6 +14,7 @@ $string['date_requested'] = 'Date requested';
 $string['description'] = 'Description';
 $string['description_help'] = 'Enter as many details as possible';
 $string['details'] = 'Details';
+$string['due_date'] = 'Due date';
 $string['halo_settings'] = 'HALO ITSM Settings';
 $string['halo_ticket_id'] = 'Existing HALO Ticket Number';
 $string['halo_url'] = 'Halo URL';
