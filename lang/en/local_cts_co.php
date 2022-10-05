@@ -49,6 +49,7 @@ $string['site_id_help'] = 'Limit User search results based on site id. (Default 
 $string['status'] = 'Status';
 $string['summary'] = 'Summary';
 $string['summary_help'] = 'Enter a short description for your request. Example: Computer order for employee';
+$string['summary_title'] = 'New computer order';
 $string['tenant'] = 'Tenant';
 $string['tenant_help'] = 'tenant provided by HALO ITSM';
 $string['ticket'] = 'Ticket';

@@ -21,6 +21,7 @@ require_login(1, false);
 $formdata = new stdClass();
 $formdata->halo_ticket_id = '';
 $formdata->userid = [$USER->id => fullname($USER) . '(' . $USER->email . ')'];
+$formdata->summary = get_string('summary_title', 'local_cts_co');
 
 $mform = new \local_cts_co\request_form(null, array('formdata' => $formdata));
 if ($mform->is_cancelled()) {
