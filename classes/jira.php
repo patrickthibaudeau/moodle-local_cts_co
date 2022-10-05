@@ -45,8 +45,8 @@ class jira extends webservice
         global $CFG;
         $jira_issue = $this->get_data('issue/', 'GET', $issue_id);
 
-        if ($jira_issue->errorMessages[0] != 'Issue Does Not Exist') {
-            print_object($jira_issue);
+        if (!isset($jira_issue->errorMessages[0])) {
+//            print_object($jira_issue);
             $issue = new \stdClass();
             $issue->id = $jira_issue->id;
             $issue->key = $jira_issue->key;
@@ -66,12 +66,19 @@ class jira extends webservice
             $issue->project->name = $jira_issue->fields->project->name;
             $issue->priority = $jira_issue->fields->priority->name;
             $issue->status = $jira_issue->fields->status->name;
-            $issue->agent = $jira_issue->fields->assignee->name;
-            $issue->agent_email = $jira_issue->fields->assignee->emailAddress;
-            $issue->agent_display_name = $jira_issue->fields->assignee->displayName;
+            // Only add agent if assignee exists
+            if (isset($jira_issue->fields->assignee->name)) {
+                $issue->agent = $jira_issue->fields->assignee->name;
+                $issue->agent_email = $jira_issue->fields->assignee->emailAddress;
+                $issue->agent_display_name = $jira_issue->fields->assignee->displayName;
+            } else {
+                $issue->agent = '';
+                $issue->agent_email = '';
+                $issue->agent_display_name = '';
+            }
+
             $issue->comments = $jira_issue->fields->comment->comments;
             $issue->worklog = $jira_issue->fields->worklog;
-
             return $issue;
         }
         return false;

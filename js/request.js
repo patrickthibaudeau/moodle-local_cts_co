@@ -1,13 +1,15 @@
 $(document).ready(function () {
     wwwroot = M.cfg.wwwroot;
-    $('#id_halo_ticket_id').on('change', function(){
+    // Check to see if ticket exists in HALO
+    $('#id_halo_ticket_id').on('change', function () {
         $('#id_halo_ticket_id').removeClass('halo_ticket_not_found');
         $('#id_halo_ticket_id').removeClass('halo_ticket_found');
         $('#id_halo_ticket_id').addClass('blinking');
+
         $.ajax({
             url: wwwroot + '/local/cts_co/ajax/check_halo_ticket.php?ticket=' + $(this).val(),
             cache: false,
-            success: function(result){
+            success: function (result) {
                 if (result == 1) {
                     $('#id_halo_ticket_id').removeClass('blinking');
                     $('#id_halo_ticket_id').removeClass('halo_ticket_not_found');
@@ -21,5 +23,10 @@ $(document).ready(function () {
                 }
             }
         });
+    });
+
+    // Full page spinner on save
+    $('#id_submitbutton').on('click', function () {
+        $('#page-content').append('<div class="lds-ring"><div></div><div></div><div></div><div></div></div>');
     });
 });

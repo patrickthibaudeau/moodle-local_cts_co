@@ -19,6 +19,7 @@ $context = CONTEXT_SYSTEM::instance();
 require_login(1, false);
 
 $formdata = new stdClass();
+$formdata->halo_ticket_id = '';
 $formdata->userid = [$USER->id => fullname($USER) . '(' . $USER->email . ')'];
 
 $mform = new \local_cts_co\request_form(null, array('formdata' => $formdata));
