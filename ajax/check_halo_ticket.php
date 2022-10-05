@@ -13,7 +13,7 @@ if ($ticket_id) {
     $HALO = new haloitsm();
     $ticket = $HALO->get_ticket($ticket_id);
     if ($ticket) {
-       echo 1;
+       echo json_encode($ticket);
     } else {
         echo 0;
     }

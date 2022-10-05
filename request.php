@@ -96,6 +96,11 @@ echo $OUTPUT->header();
 //
 
 $mform->display();
+base::getAlertModal(
+    'cts-alert',
+    get_string('halo_ticket_not_found_title', 'local_cts_co'),
+    get_string('halo_ticket_not_found', 'local_cts_co')
+);
 
 //**********************
 //*** DISPLAY FOOTER ***
