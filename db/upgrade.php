@@ -106,5 +106,28 @@ function xmldb_local_cts_co_upgrade($oldversion)
         // Cts_co savepoint reached.
         upgrade_plugin_savepoint(true, 2022093003, 'local', 'cts_co');
     }
+
+    if ($oldversion < 2022100400) {
+
+        // Define field agent to be added to cts_co_status.
+        $table = new xmldb_table('cts_co_status');
+        $field = new xmldb_field('agent', XMLDB_TYPE_CHAR, '16', null, null, null, null, 'status');
+
+        // Conditionally launch add field agent.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field due_date to be added to cts_co_request.
+        $table = new xmldb_table('cts_co_request');
+        $field = new xmldb_field('due_date', XMLDB_TYPE_INTEGER, '16', null, null, null, '0', 'jira_issue_url');
+
+        // Conditionally launch add field due_date.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        // Cts_co savepoint reached.
+        upgrade_plugin_savepoint(true, 2022100400, 'local', 'cts_co');
+    }
     return true;
 }

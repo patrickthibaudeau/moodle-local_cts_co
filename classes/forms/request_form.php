@@ -35,6 +35,10 @@ class request_form extends \moodleform
         $mform->addElement('autocomplete', 'userid', get_string('requested_for', 'local_cts_co'), [], $user_options);
         $mform->setType('userid', PARAM_INT);
 
+        // Existing HALO ticket
+        $mform->addElement('text', 'halo_ticket_id', get_string('halo_ticket_id', 'local_cts_co'), '');
+        $mform->setType('halo_ticket_id', PARAM_INT);
+
         // Summary
         $mform->addElement('text', 'summary', get_string('summary', 'local_cts_co'), '');
         $mform->addHelpButton('summary', 'summary', 'local_cts_co');

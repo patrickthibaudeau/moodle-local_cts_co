@@ -1,0 +1,23 @@
+.halo_ticket_found {
+    border-color: #1fd655;
+    border-width: 3px;
+    box-shadow: rgba(31, 214, 85, 0.35) 0px 5px 15px;
+}
+
+.halo_ticket_not_found {
+    border-color: #e31837;
+    border-width: 3px;
+    box-shadow: rgba(227, 24, 55, 0.35) 0px 5px 15px;
+}
+
+.blinking {
+    border: 6px dotted #ffcc00;
+    animation-name: blinking;
+    animation-duration: 1s;
+    animation-iteration-count: 100;
+}
+@keyframes blinking {
+    50% {
+        border-color: #d49f0f;
+    }
+}

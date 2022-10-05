@@ -38,7 +38,13 @@ if ($mform->is_cancelled()) {
     $description = $data->description_editor['text'];
 
     // Create HALO ticket
-    $new_ticket = $HALO->create_ticket($USER->username, $data->summary, $description);
+    if (!$data->halo_ticket_id) {
+        $new_ticket = $HALO->create_ticket($USER->username, $data->summary, $description);
+    } else {
+        $new_ticket = new stdClass();
+        $new_ticket->id = $data->halo_ticket_id;
+    }
+
     if (is_object($new_ticket)) {
         // Remove HTML tags for JIRA
         $H2T = new html2text($description);
@@ -70,6 +76,9 @@ if ($mform->is_cancelled()) {
 } else {
     $mform->set_data($mform);
 }
+
+$PAGE->requires->js('/local/cts_co/js/request.js', true);
+$PAGE->requires->css('/local/cts_co/css/request.css');
 
 base::page(
     '/local/cts_co/request.php',

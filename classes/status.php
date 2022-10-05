@@ -64,13 +64,15 @@ class status
         $JIRA = new jira();
         $HALO = new haloitsm();
         $issue = $JIRA->get_issue($jira_issue_key);
-        // If issue status is not the same as result status, add new status record
-        if (isset($issue)) {
+        // If the issue exists
+        if ($issue) {
+            // If issue status is not the same as result status, add new status record
             if ($issue->status != $result->status) {
                 $REQUEST = new request($request_id);
                 $params = new \stdClass();
                 $params->request_id = $request_id;
                 $params->status = $issue->status;
+                $params->agent = $issue->agent;
                 $params->timecreated = $issue->updated;
 
                 $new_status_id = $DB->insert_record('cts_co_status', $params);
@@ -78,6 +80,7 @@ class status
                 $request_params = new \stdClass();
                 $request_params->id = $request_id;
                 $request_params->latest_status = $issue->status;
+                $request_params->due_date = $issue->duedate;
                 $request_params->timemodified = $params->timecreated;
 
                 $DB->update_record('cts_co_request', $request_params);
@@ -96,7 +99,7 @@ class status
                 return $new_status_id;
             }
         } else {
-            notification::error('This record is not aproperly ssocitaed with ticket');
+            notification::error('The JIRA issue for this request does not exist');
         }
         return false;
     }

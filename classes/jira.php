@@ -43,8 +43,10 @@ class jira extends webservice
     public function get_issue($issue_id)
     {
         global $CFG;
-        if ($jira_issue = $this->get_data('issue/', 'GET', $issue_id)) {
-            //print_object($jira_issue);
+        $jira_issue = $this->get_data('issue/', 'GET', $issue_id);
+
+        if ($jira_issue->errorMessages[0] != 'Issue Does Not Exist') {
+            print_object($jira_issue);
             $issue = new \stdClass();
             $issue->id = $jira_issue->id;
             $issue->key = $jira_issue->key;
@@ -53,9 +55,10 @@ class jira extends webservice
             $issue->lastviewed = strtotime($jira_issue->fields->lastViewed);
             $issue->created = strtotime($jira_issue->fields->created);
             $issue->updated = strtotime($jira_issue->fields->updated);
-            $issue->lastviewed_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->lastViewed));
-            $issue->created_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->created));
-            $issue->updated_hr = strftime(get_string('strftimedatetime'),strtotime($jira_issue->fields->updated));
+            $issue->duedate = strtotime($jira_issue->fields->duedate);
+            $issue->lastviewed_hr = strftime(get_string('strftimedatetime'), strtotime($jira_issue->fields->lastViewed));
+            $issue->created_hr = strftime(get_string('strftimedatetime'), strtotime($jira_issue->fields->created));
+            $issue->updated_hr = strftime(get_string('strftimedatetime'), strtotime($jira_issue->fields->updated));
             $issue->project = new \stdClass();
             $issue->project->id = $jira_issue->fields->project->id;
             $issue->project->key = $jira_issue->fields->project->key;
@@ -63,16 +66,20 @@ class jira extends webservice
             $issue->project->name = $jira_issue->fields->project->name;
             $issue->priority = $jira_issue->fields->priority->name;
             $issue->status = $jira_issue->fields->status->name;
-            $issue->agent = $jira_issue->fields->reporter->name;
+            $issue->agent = $jira_issue->fields->assignee->name;
+            $issue->agent_email = $jira_issue->fields->assignee->emailAddress;
+            $issue->agent_display_name = $jira_issue->fields->assignee->displayName;
             $issue->comments = $jira_issue->fields->comment->comments;
             $issue->worklog = $jira_issue->fields->worklog;
 
             return $issue;
         }
+        return false;
 
     }
 
-    public function create_issue($summary, $description) {
+    public function create_issue($summary, $description)
+    {
         global $CFG;
 
         $token = $this->authenticate();

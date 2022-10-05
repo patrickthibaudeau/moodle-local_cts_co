@@ -14,6 +14,7 @@ $string['description'] = 'Description';
 $string['description_help'] = 'Enter as many details as possible';
 $string['details'] = 'Details';
 $string['halo_settings'] = 'HALO ITSM Settings';
+$string['halo_ticket_id'] = 'Existing HALO Ticket Number';
 $string['halo_url'] = 'Halo URL';
 $string['halo_url_help'] = 'Enter the url you would use to login to your HALO application';
 $string['home'] = 'Home';
