@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/cts_co/db" VERSION="20220930" COMMENT="XMLDB file for Moodle local/cts_co"
+<XMLDB PATH="local/cts_co/db" VERSION="20221004" COMMENT="XMLDB file for Moodle local/cts_co"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -14,6 +14,7 @@
         <FIELD NAME="jira_issue_id" TYPE="int" LENGTH="16" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="jira_issue_key" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="jira_issue_url" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="due_date" TYPE="int" LENGTH="16" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="latest_status" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="usermodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
@@ -29,6 +30,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="request_id" TYPE="int" LENGTH="16" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="cts_co id"/>
         <FIELD NAME="status" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="agent" TYPE="char" LENGTH="16" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="halo_action_id" TYPE="int" LENGTH="20" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="16" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
