@@ -173,4 +173,185 @@ class request
     {
         return $this->record->halo_ticket_id;
     }
+
+    /**
+     * @param $step int 
+     * @return void
+     */
+    public function current_status($step) {
+        switch ($step) {
+            case 1:
+                $new_request= 'info';
+                $quote_process = 'secondary';
+                $order_process = 'secondary';
+                $receiving_process = 'secondary';
+                $order_complete = 'secondary';
+                $inventory_process = 'secondary';
+                $imaging_process = 'secondary';
+                $setup_process = 'secondary';
+                $pickup_process = 'secondary';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 2:
+                $new_request= 'success';
+                $quote_process = 'info';
+                $order_process = 'secondary';
+                $receiving_process = 'secondary';
+                $order_complete = 'secondary';
+                $inventory_process = 'secondary';
+                $imaging_process = 'secondary';
+                $setup_process = 'secondary';
+                $pickup_process = 'secondary';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 3:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'info';
+                $receiving_process = 'secondary';
+                $order_complete = 'secondary';
+                $inventory_process = 'secondary';
+                $imaging_process = 'secondary';
+                $setup_process = 'secondary';
+                $pickup_process = 'secondary';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 4:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'info';
+                $order_complete = 'secondary';
+                $inventory_process = 'secondary';
+                $imaging_process = 'secondary';
+                $setup_process = 'secondary';
+                $pickup_process = 'secondary';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 5:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'success';
+                $order_complete = 'info';
+                $inventory_process = 'secondary';
+                $imaging_process = 'secondary';
+                $setup_process = 'secondary';
+                $pickup_process = 'secondary';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 5:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'success';
+                $order_complete = 'success';
+                $inventory_process = 'info';
+                $imaging_process = 'secondary';
+                $setup_process = 'secondary';
+                $pickup_process = 'secondary';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 5:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'success';
+                $order_complete = 'success';
+                $inventory_process = 'success';
+                $imaging_process = 'info';
+                $setup_process = 'secondary';
+                $pickup_process = 'secondary';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 6:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'success';
+                $order_complete = 'success';
+                $inventory_process = 'success';
+                $imaging_process = 'success';
+                $setup_process = 'info';
+                $pickup_process = 'secondary';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 7:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'success';
+                $order_complete = 'success';
+                $inventory_process = 'success';
+                $imaging_process = 'success';
+                $setup_process = 'success';
+                $pickup_process = 'info';
+                $deployment_process= 'secondary';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 8:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'success';
+                $order_complete = 'success';
+                $inventory_process = 'success';
+                $imaging_process = 'success';
+                $setup_process = 'success';
+                $pickup_process = 'success';
+                $deployment_process= 'info';
+                $deployment_process_completed = 'secondary';
+                break;
+            case 9:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'success';
+                $order_complete = 'success';
+                $inventory_process = 'success';
+                $imaging_process = 'success';
+                $setup_process = 'success';
+                $pickup_process = 'success';
+                $deployment_process= 'success';
+                $deployment_process_completed = 'info';
+                break;
+            case 10:
+                $new_request= 'success';
+                $quote_process = 'success';
+                $order_process = 'success';
+                $receiving_process = 'success';
+                $order_complete = 'success';
+                $inventory_process = 'success';
+                $imaging_process = 'success';
+                $setup_process = 'success';
+                $pickup_process = 'success';
+                $deployment_process= 'success';
+                $deployment_process_completed = 'success';
+                break;
+        }
+        
+        $results = new \stdClass();
+        $results->new_request = $new_request;
+        $results->quote_process = $quote_process;
+        $results->order_process = $order_process;
+        $results->receiving_process = $receiving_process;
+        $results->order_complete = $order_complete;
+        $results->inventory_process = $inventory_process;
+        $results->imaging_process = $imaging_process;
+        $results->setup_process = $setup_process;
+        $results->pickup_process = $pickup_process;
+        $results->deployment_process = $deployment_process;
+        $results->deployment_process_completed = $deployment_process_completed;
+
+        return $results;
+
+    }
 }

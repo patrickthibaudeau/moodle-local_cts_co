@@ -91,10 +91,11 @@ class status
                     $issue->agent,
                     $REQUEST->get_halo_ticket_id(),
                     $note);
+
                 // Update the ticket to capture the action id
                 $action_params = new \stdClass();
                 $action_params->id = $new_status_id;
-                $action->halo_action_id = $action->id;
+                $action_params->halo_action_id = $action->id;
                 $DB->update_record('cts_co_status', $action_params);
                 return $new_status_id;
             }

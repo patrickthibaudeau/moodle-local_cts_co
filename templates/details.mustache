@@ -11,41 +11,44 @@
     </div>
 
     <div class="row mt-2">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="mb-3">{{#str}}details, local_cts_co{{/str}}</h3>
-                    <b>{{#str}}ticket, local_cts_co{{/str}}:</b> <a href="{{halo_url}}/tickets?id={{halo_ticket_id}}" target="_blank">
-                    SR-{{halo_ticket_id}}</a><br>
-                    <b>{{#str}}requested_for, local_cts_co{{/str}}:</b> {{for_user}}<br>
-                    <b>{{#str}}requested_by, local_cts_co{{/str}}:</b> {{by_user}}<br>
-                    <b>{{#str}}date_requested, local_cts_co{{/str}}:</b> {{timecreated}}<br>
-                    <b>{{#str}}due_date, local_cts_co{{/str}}:</b> {{#issue}}{{duedate_hr}}{{/issue}}<br>
-                    <b>{{#str}}agent, local_cts_co{{/str}}:</b> {{#issue}}{{agent_display_name}}{{/issue}}<br>
-                    <h5 class="mt-2">{{#str}}request, local_cts_co{{/str}}</h5>
-                    <p>
-                        {{{description}}}
-                    </p>
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}details, local_cts_co{{/str}}</h3>
+                        <b>{{#str}}ticket, local_cts_co{{/str}}:</b> <a href="{{halo_url}}/tickets?id={{halo_ticket_id}}
+                        " target="_blank">
+                        SR-{{halo_ticket_id}}</a><br>
+                        <b>{{#str}}requested_for, local_cts_co{{/str}}:</b> {{for_user}}<br>
+                        <b>{{#str}}requested_by, local_cts_co{{/str}}:</b> {{by_user}}<br>
+                        <b>{{#str}}date_requested, local_cts_co{{/str}}:</b> {{timecreated}}<br>
+                        <b>{{#str}}due_date, local_cts_co{{/str}}:</b> {{#issue}}{{duedate_hr}}{{/issue}}<br>
+                        <b>{{#str}}agent, local_cts_co{{/str}}:</b> {{#issue}}{{agent_display_name}}{{/issue}}<br>
+                        <h5 class="mt-2">{{#str}}request, local_cts_co{{/str}}</h5>
+                        <p>
+                            {{{description}}}
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}process_status, local_cts_co{{/str}}</h3>
+                        <span class="badge badge-{{new_request_process}}">New Request</span><br>
+                        <span class="badge badge-{{quote_process}}">Quote Process</span><br>
+                        <span class="badge badge-{{order_process}}">Order Submitted</span><br>
+                        <span class="badge badge-{{receiving_process}}">Receiving/Inventory Stage</span><br>
+                        <span class="badge badge-{{order_complete}}">Order Completed</span><br>
+                        <span class="badge badge-{{inventory_process}}">Inventory Processing</span><br>
+                        <span class="badge badge-{{imaging_process}}">Imaging Stage</span><br>
+                        <span class="badge badge-{{setup_process}}">Setup /Deployment Stage</span><br>
+                        <span class="badge badge-{{pickup_process}}">Scheduled Pickup/Shipping</span><br>
+                        <span class="badge badge-{{deployment_process}}">Deployment</span><br>
+                        <span class="badge badge-{{deployment_process_completed}}">Deployment Completed</span><br>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="mb-3">{{#str}}process, local_cts_co{{/str}}</h3>
-                    <span class="badge {{#new_request_completed}}badge-success{{/new_request_completed}}{{^new_request_completed}}badge-info{{/new_request_completed}}">New Request</span><br>
-                    <span class="badge badge-secondary">Quote Process</span><br>
-                    <span class="badge badge-secondary">Order Submitted</span><br>
-                    <span class="badge badge-secondary">Receiving/Inventory Stage</span><br>
-                    <span class="badge badge-secondary">Order Completed</span><br>
-                    <span class="badge badge-secondary">Inventory Processing</span><br>
-                    <span class="badge badge-secondary">Imaging Stage</span><br>
-                    <span class="badge badge-secondary">Setup /Deployment Stage</span><br>
-                    <span class="badge badge-secondary">Scheduled Pickup/Shipping</span><br>
-                    <span class="badge badge-secondary">Deployment Completed</span><br>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <div class="row mt-3">

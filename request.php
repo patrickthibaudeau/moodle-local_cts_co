@@ -20,6 +20,7 @@ require_login(1, false);
 
 $formdata = new stdClass();
 $formdata->halo_ticket_id = '';
+$formdata->description_editor['text'] = '';
 $formdata->userid = [$USER->id => fullname($USER) . '(' . $USER->email . ')'];
 $formdata->summary = get_string('summary_title', 'local_cts_co');
 

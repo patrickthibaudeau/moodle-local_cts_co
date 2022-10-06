@@ -65,98 +65,7 @@ class details implements \renderable, \templatable
             $i++;
         }
 
-        switch ($i) {
-            case 1:
-                $new_request_completed = false;
-                $quote_process_started = false;
-                $quote_process_not_started = true;
-                $quote_process_completed = false;
-                $order_process_started = false;
-                $order_process_not_started = false;
-                $order_process_completed = false;
-                $receiving_process_started = false;
-                $receiving_process_not_started = false;
-                $receiving_process_completed = false;
-                $order_complete_process_started = false;
-                $order_complete_process_not_started = false;
-                $order_complete_process_completed = false;
-                $inventory_process_started = false;
-                $inventory_process_not_started = false;
-                $inventory_process_completed = false;
-                $imaging_process_started = false;
-                $imaging_process_not_started = false;
-                $imaging_process_completed = false;
-                $setup_process_started = false;
-                $setup_process_not_started = false;
-                $setup_process_completed = false;
-                $pickup_process_started = false;
-                $pickup_process_not_started = false;
-                $pickup_process_completed = false;
-                $deployment_process_started = false;
-                $deployment_process_not_started = false;
-                $deployment_process_completed = false;
-                break;
-            case 2:
-                $new_request_completed = true;
-                $quote_process_started = true;
-                $quote_process_not_started = true;
-                $quote_process_completed = false;
-                $order_process_started = false;
-                $order_process_not_started = true;
-                $order_process_completed = false;
-                $receiving_process_started = false;
-                $receiving_process_not_started = true;
-                $receiving_process_completed = false;
-                $order_complete_process_started = false;
-                $order_complete_process_not_started = true;
-                $order_complete_process_completed = false;
-                $inventory_process_started = false;
-                $inventory_process_not_started = true;
-                $inventory_process_completed = false;
-                $imaging_process_started = false;
-                $imaging_process_not_started = true;
-                $imaging_process_completed = false;
-                $setup_process_started = false;
-                $setup_process_not_started = true;
-                $setup_process_completed = false;
-                $pickup_process_started = false;
-                $pickup_process_not_started = true;
-                $pickup_process_completed = false;
-                $deployment_process_started = false;
-                $deployment_process_not_started = true;
-                $deployment_process_completed = false;
-                break;
-            case 3:
-                $new_request_completed = true;
-                $quote_process_started = true;
-                $quote_process_not_started = false;
-                $quote_process_completed = false;
-                $order_process_started = false;
-                $order_process_not_started = true;
-                $order_process_completed = false;
-                $receiving_process_started = false;
-                $receiving_process_not_started = true;
-                $receiving_process_completed = false;
-                $order_complete_process_started = false;
-                $order_complete_process_not_started = true;
-                $order_complete_process_completed = false;
-                $inventory_process_started = false;
-                $inventory_process_not_started = true;
-                $inventory_process_completed = false;
-                $imaging_process_started = false;
-                $imaging_process_not_started = true;
-                $imaging_process_completed = false;
-                $setup_process_started = false;
-                $setup_process_not_started = true;
-                $setup_process_completed = false;
-                $pickup_process_started = false;
-                $pickup_process_not_started = true;
-                $pickup_process_completed = false;
-                $deployment_process_started = false;
-                $deployment_process_not_started = true;
-                $deployment_process_completed = false;
-                break;
-        }
+        $process_class = $REQUEST->current_status(count($results->statuses));
 
         $data = [
             'summary' => $results->request->summary,
@@ -167,7 +76,18 @@ class details implements \renderable, \templatable
             'by_user' => fullname($by_user),
             'timeline' => json_encode($timeline),
             'halo_url' => $CFG->halo_url,
-            'issue' => $issue
+            'issue' => $issue,
+            'new_request_process' => $process_class->new_request,
+            'quote_process' => $process_class->quote_process,
+            'order_process' => $process_class->order_process,
+            'receiving_process' => $process_class->receiving_process,
+            'order_complete' => $process_class->order_complete,
+            'inventory_process' => $process_class->inventory_process,
+            'imaging_process' => $process_class->imaging_process,
+            'setup_process' => $process_class->setup_process,
+            'pickup_process' => $process_class->pickup_process,
+            'deployment_process' => $process_class->deployment_process,
+            'deployment_process_completed' => $process_class->deployment_process_completed,
         ];
 
         return $data;
