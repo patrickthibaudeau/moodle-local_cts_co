@@ -22,16 +22,21 @@ $HALO = new haloitsm();
 $JIRA = new jira();
 $STATUS = new status();
 
-$html = '<p dir="ltr" style="text-align: left;">Hello,</p>
-<p dir="ltr" style="text-align: left;">This is what I want to do</p>
-<p dir="ltr" style="text-align: left;">Get thsi stuff<br></p>
-<p dir="ltr" style="text-align: left;"><br></p>';
+//$html = '<p dir="ltr" style="text-align: left;">Hello,</p>
+//<p dir="ltr" style="text-align: left;">This is what I want to do</p>
+//<p dir="ltr" style="text-align: left;">Get thsi stuff<br></p>
+//<p dir="ltr" style="text-align: left;"><br></p>';
+//
+//$H2T = new html2text($html);
+//$text = $H2T->get_text();
+//echo '<textarea>' . $text . '</textarea>';
+//
+//print_object($JIRA->get_issue('CTSCO-3'));
 
-$H2T = new html2text($html);
-$text = $H2T->get_text();
-echo '<textarea>' . $text . '</textarea>';
+$ticket = $HALO->get_ticket(23128);
+//print_object($ticket);
 
-print_object($JIRA->get_issue('CTSCO-3'));
+$JIRA->update_agent_from_halo(23128);
 //print_object($HALO->add_action('thibaud', '0110043' , 'This is a note'));
 //print_object($HALO->get_users('thibaud'));
 //$new_ticket = $HALO->create_ticket('thibaud', 'New computer request', "I need a new computer<br>MacBook Pro 14");

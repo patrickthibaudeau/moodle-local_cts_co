@@ -81,6 +81,16 @@ class haloitsm extends webservice
         return false;
     }
 
+    public function get_user_by_id($id) {
+        global $CFG;
+        return $this->get_data('Users/', 'GET', $id);
+    }
+
+    public function get_agent_by_id($id) {
+        global $CFG;
+        return $this->get_data('Agent/', 'GET', $id);
+    }
+
     /**
      * Returns all users based on name entered
      * @param string $name

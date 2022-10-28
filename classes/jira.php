@@ -117,4 +117,12 @@ class jira extends webservice
 
         return json_decode($new_issue);
     }
+
+    public function update_agent_from_halo($halo_ticket_id, $jira_issue_id) {
+        $HALO = new haloitsm();
+        $ticket = $HALO->get_ticket($halo_ticket_id);
+        $agent = $HALO->get_agent_by_id($ticket->agent_id);
+
+        $issue = $this->get_issue();
+    }
 }
