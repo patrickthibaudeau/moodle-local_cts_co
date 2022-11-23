@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/cts_co/db" VERSION="20221004" COMMENT="XMLDB file for Moodle local/cts_co"
+<XMLDB PATH="local/cts_co/db" VERSION="20221123" COMMENT="XMLDB file for Moodle local/cts_co"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -32,6 +32,8 @@
         <FIELD NAME="status" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="agent" TYPE="char" LENGTH="16" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="halo_action_id" TYPE="int" LENGTH="20" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="jira_comment_id" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Array key of jira comment"/>
+        <FIELD NAME="jira_comment" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="16" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
@@ -39,6 +41,7 @@
       </KEYS>
       <INDEXES>
         <INDEX NAME="idx_request_id" UNIQUE="false" FIELDS="request_id"/>
+        <INDEX NAME="idx_comment_id" UNIQUE="true" FIELDS="jira_comment_id"/>
       </INDEXES>
     </TABLE>
   </TABLES>

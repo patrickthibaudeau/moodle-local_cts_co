@@ -30,8 +30,18 @@ $STATUS = new status();
 //$H2T = new html2text($html);
 //$text = $H2T->get_text();
 //echo '<textarea>' . $text . '</textarea>';
-//$issue = $JIRA->get_issue('CTSCO-19');
+$issue = $JIRA->get_issue('CTSCO-19');
 //print_object($issue);
+$params = new stdClass();
+foreach ($issue->comments as $comment) {
+ if (!$found = $DB->get_record('cts_co_status', ['jira_comment_id' =>$comment->id])) {
+  $params->jira_comment_id = $comment->id;
+  $params->jira_comment = $comment->body;
+  // only add 1 comment per status
+  break;
+ }
+}
+print_object($params);
 //print_object(strtotime('2022-11-23T03:22:32.1991177Z'));
 //$ticket = $HALO->get_ticket(0110310);
 //print_object($ticket);
@@ -40,17 +50,17 @@ $STATUS = new status();
 //print_object($JIRA->get_assignee_id('CTSCO-3', 'aalaily'));
 //print_object($HALO->add_action('aalaily', '110310' , 'This is a note too'));
 //print_object($HALO->get_user_by_username('aalaily'));
-$new_ticket = $HALO->create_ticket('rsambhi', 'New computer request', "I need a new computer<br>MacBook Pro 14");
+//$new_ticket = $HALO->create_ticket('rsambhi', 'New computer request', "I need a new computer<br>MacBook Pro 14");
 //
 //print_object($new_ticket);
 
-$jira_description = str_replace('<br>', "\n", $new_ticket->details);
-$jira_description .= "\n\nHalo Ticket ID: " . $new_ticket->id;
+//$jira_description = str_replace('<br>', "\n", $new_ticket->details);
+//$jira_description .= "\n\nHalo Ticket ID: " . $new_ticket->id;
 // Remove HTML tags
-$jira_description = strip_tags($jira_description);
+//$jira_description = strip_tags($jira_description);
 
-$new_jira_issue = $JIRA->create_issue($new_ticket->summary . ' - SR-' . $new_ticket->id, $jira_description);
-print_object($new_jira_issue);
+//$new_jira_issue = $JIRA->create_issue($new_ticket->summary . ' - SR-' . $new_ticket->id, $jira_description);
+//print_object($new_jira_issue);
 
 //$STATUS->update_status(3, 'CTSCO-7');
 

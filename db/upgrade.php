@@ -129,5 +129,38 @@ function xmldb_local_cts_co_upgrade($oldversion)
         // Cts_co savepoint reached.
         upgrade_plugin_savepoint(true, 2022100400, 'local', 'cts_co');
     }
+
+    if ($oldversion < 2022112300) {
+
+        // Define field jira_comment_id to be added to cts_co_status.
+        $table = new xmldb_table('cts_co_status');
+        $field = new xmldb_field('jira_comment_id', XMLDB_TYPE_INTEGER, '10', null, null, null, '0', 'halo_action_id');
+
+        // Conditionally launch add field jira_comment_id.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field jira_comment to be added to cts_co_status.
+        $table = new xmldb_table('cts_co_status');
+        $field = new xmldb_field('jira_comment', XMLDB_TYPE_TEXT, null, null, null, null, null, 'jira_comment_id');
+
+        // Conditionally launch add field jira_comment.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define index idx_comment_id (unique) to be added to cts_co_status.
+        $table = new xmldb_table('cts_co_status');
+        $index = new xmldb_index('idx_comment_id', XMLDB_INDEX_NOTUNIQUE, ['jira_comment_id']);
+
+        // Conditionally launch add index idx_comment_id.
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+
+        // Cts_co savepoint reached.
+        upgrade_plugin_savepoint(true, 2022112300, 'local', 'cts_co');
+    }
     return true;
 }

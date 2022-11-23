@@ -74,6 +74,15 @@ class status
                 $params->status = $issue->status;
                 $params->agent = $issue->agent;
                 $params->timecreated = $issue->updated;
+                // Find out if comment already exists
+                foreach ($issue->comments as $comment) {
+                    if (!$found = $DB->get_record('cts_co_status', ['jira_comment_id' =>$comment->id])) {
+                        $params->jira_comment_id = $comment->id;
+                        $params->jira_comment = $comment->body;
+                        // only add 1 comment per status
+                        break;
+                    }
+                }
 
                 $new_status_id = $DB->insert_record('cts_co_status', $params);
                 //Update latest status in request record;
@@ -86,6 +95,10 @@ class status
                 $DB->update_record('cts_co_request', $request_params);
 
                 $note = 'Your computer request status has been updated to ' . $issue->status;
+                // Add comment to HALO action
+                if (isset($params->jira_comment_id)) {
+                    $note .= '<p>' . $params->jira_comment . '</p>';
+                }
                 // create HALO action on ticket
                 $action = $HALO->add_action(
                     $issue->agent,
