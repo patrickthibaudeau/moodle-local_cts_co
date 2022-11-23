@@ -30,9 +30,9 @@ class status
     {
         global $DB;
 
-        $timecreated = time();
-
-        $data->timecreated = $timecreated;
+        if (!isset($data->timecreated)) {
+            $data->timecreated = time();
+        }
 
         $id = $DB->insert_record($this->table, $data);
 

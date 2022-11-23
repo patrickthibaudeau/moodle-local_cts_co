@@ -72,11 +72,16 @@ class details implements \renderable, \templatable
 
         $process_class = $REQUEST->current_status(count($results->statuses));
 
+        if (!$results->request->timecreated) {
+            $timecreated = strftime(get_string('strftimedatetime'), $ticket->dateoccurred);
+        } else {
+            $timecreated = strftime(get_string('strftimedatetime'), $results->request->timecreated)
+        }
         $data = [
             'summary' => $results->request->summary,
             'description' => $results->request->description,
             'halo_ticket_id' => $results->request->halo_ticket_id,
-            'timecreated' => strftime(get_string('strftimedatetime'), $results->request->timecreated),
+            'timecreated' => $timecreated,
             'for_user' => fullname($for_user),
             'by_user' => fullname($by_user),
             'timeline' => json_encode($timeline),

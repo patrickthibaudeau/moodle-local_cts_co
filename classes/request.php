@@ -64,6 +64,7 @@ class request
             $status_data = new \stdClass();
             $status_data->request_id = $id;
             $status_data->status = 'New request';
+            $status_data->timecreated = $timecreated;
 
             $STATUS->insert_record($status_data);
 

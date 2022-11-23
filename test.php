@@ -30,21 +30,12 @@ $STATUS = new status();
 //$H2T = new html2text($html);
 //$text = $H2T->get_text();
 //echo '<textarea>' . $text . '</textarea>';
-$issue = $JIRA->get_issue('CTSCO-19');
+//$issue = $JIRA->get_issue('CTSCO-19');
 //print_object($issue);
-$params = new stdClass();
-foreach ($issue->comments as $comment) {
- if (!$found = $DB->get_record('cts_co_status', ['jira_comment_id' =>$comment->id])) {
-  $params->jira_comment_id = $comment->id;
-  $params->jira_comment = $comment->body;
-  // only add 1 comment per status
-  break;
- }
-}
-print_object($params);
+
 //print_object(strtotime('2022-11-23T03:22:32.1991177Z'));
-//$ticket = $HALO->get_ticket(0110310);
-//print_object($ticket);
+$ticket = $HALO->get_ticket(0110310);
+print_object($ticket);
 
 //print_object($JIRA->update_agent_from_halo(110052,'CTSCO-3'));
 //print_object($JIRA->get_assignee_id('CTSCO-3', 'aalaily'));
