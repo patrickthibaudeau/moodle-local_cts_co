@@ -51,7 +51,7 @@ class details implements \renderable, \templatable
         $STATUS->update_status($this->id, $REQUEST->get_jira_issue_key());
 
         $results = $REQUEST->get_request('ASC');
-        $issue = $JIRA->get_issue($REQUEST->get_jira_issue_key());
+        $issue = $REQUEST->get_jira_issue_key();
         // Get user information
         $for_user = $DB->get_record('user', ['id' => $results->request->userid]);
         $by_user = $DB->get_record('user', ['id' => $results->request->usermodified]);
