@@ -32,6 +32,8 @@ $(document).ready(function () {
 
     // Full page spinner on save
     $('#id_submitbutton').on('click', function () {
-        $('#page-content').append('<div class="lds-ring"><div></div><div></div><div></div><div></div></div>');
+        let spinner =  $('<div></div>').attr('class', 'loading');
+        spinner.appendTo('body');
+        $(this).hide();
     });
 });

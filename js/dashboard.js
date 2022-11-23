@@ -38,6 +38,8 @@ $(document).ready(function () {
     // Click on row
     $('#cts_co_my_request_table').on('click', 'tbody tr', function (){
         var row = request_table.row($(this)).data();
+        let spinner =  $('<div></div>').attr('class', 'loading');
+        spinner.appendTo('body');
         window.location.href = wwwroot + "/local/cts_co/details.php?id=" + row.id;   //full row of array data
     });
 });

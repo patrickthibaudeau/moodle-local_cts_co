@@ -46,7 +46,11 @@ class request
     {
         global $DB;
 
-        $timecreated = time();
+        if (!isset($data->timecreated)) {
+            $timecreated = time();
+        } else {
+            $timecreated = $data->timecreated;
+        }
         $timemodified = $timecreated;
 
         $data->timecreated = $timecreated;

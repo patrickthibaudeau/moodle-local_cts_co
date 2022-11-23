@@ -13,6 +13,7 @@ $context = context_system::instance();
  \local_cts_co\base::page($CFG->wwwroot . '/local/cto_co/index.php', get_string('pluginname', 'local_cts_co'), '', $context);
 
  // Load JS
+$PAGE->requires->css('/local/cts_co/css/request.css');
 $PAGE->requires->js('/local/cts_co/js/dashboard.js', true);
 //**************** ******
 //*** DISPLAY HEADER ***

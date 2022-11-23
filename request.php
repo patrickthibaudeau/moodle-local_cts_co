@@ -44,8 +44,7 @@ if ($mform->is_cancelled()) {
     if (!$data->halo_ticket_id) {
         $new_ticket = $HALO->create_ticket($USER->username, $data->summary, $description);
     } else {
-        $new_ticket = new stdClass();
-        $new_ticket->id = $data->halo_ticket_id;
+        $new_ticket = $HALO->get_ticket($data->halo_ticket_id);
     }
 
     if (is_object($new_ticket)) {
@@ -55,18 +54,19 @@ if ($mform->is_cancelled()) {
         // Add HALO Ticket ID to JIRA description
         $jira_description .= "\n\nHalo Ticket ID: " . $new_ticket->id;
         // Create JIRA issue
-        $new_jira_issue = $JIRA->create_issue($data->summary, $jira_description);
+        $new_jira_issue = $JIRA->create_issue($data->summary . ' - SR-' . $new_ticket->id, $jira_description);
 
         // Create request record
         $params = new stdClass();
         $params->userid = $data->userid;
-        $params->summary = $data->summary;
+        $params->summary = $data->summary . ' - SR-' . $new_ticket->id;
         $params->description = $description;
         $params->halo_ticket_id = $new_ticket->id;
         $params->jira_issue_id = $new_jira_issue->id;
         $params->jira_issue_key = $new_jira_issue->key;
         $params->jira_issue_url = $new_jira_issue->self;
         $params->usermodified = $USER->id;
+        $params->timecreated = strtotime($new_ticket->dateoccurred);
 
         $REQUEST->insert_record($params);
 

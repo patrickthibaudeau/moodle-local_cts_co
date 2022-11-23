@@ -15,6 +15,7 @@
 
 namespace local_cts_co\output;
 
+use local_cts_co\haloitsm;
 use local_cts_co\request;
 use local_cts_co\status;
 use local_cts_co\jira;
@@ -47,11 +48,15 @@ class details implements \renderable, \templatable
         $REQUEST = new request($this->id);
         $STATUS = new status();
         $JIRA = new jira();
+        $HALO = new haloitsm();
         // Update status for this record
         $STATUS->update_status($this->id, $REQUEST->get_jira_issue_key());
 
         $results = $REQUEST->get_request('ASC');
-        $issue = $REQUEST->get_jira_issue_key();
+        $issue = $JIRA->get_issue($REQUEST->get_jira_issue_key());
+
+        $ticket = $HALO->get_ticket($results->request->halo_ticket_id);
+        $agent = $HALO->get_agent_by_id($ticket->agent_id);
         // Get user information
         $for_user = $DB->get_record('user', ['id' => $results->request->userid]);
         $by_user = $DB->get_record('user', ['id' => $results->request->usermodified]);
@@ -77,6 +82,7 @@ class details implements \renderable, \templatable
             'timeline' => json_encode($timeline),
             'halo_url' => $CFG->halo_url,
             'issue' => $issue,
+            'agent' => $agent->name,
             'new_request_process' => $process_class->new_request,
             'quote_process' => $process_class->quote_process,
             'order_process' => $process_class->order_process,
