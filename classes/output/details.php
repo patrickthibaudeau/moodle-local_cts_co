@@ -75,7 +75,7 @@ class details implements \renderable, \templatable
         if (!$results->request->timecreated) {
             $timecreated = strftime(get_string('strftimedatetime'), $ticket->dateoccurred);
         } else {
-            $timecreated = strftime(get_string('strftimedatetime'), $results->request->timecreated)
+            $timecreated = strftime(get_string('strftimedatetime'), $results->request->timecreated);
         }
         $data = [
             'summary' => $results->request->summary,
