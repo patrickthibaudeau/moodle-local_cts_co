@@ -66,7 +66,7 @@ class details implements \renderable, \templatable
         $timeline = [];
         foreach ($results->statuses as $status) {
             $timeline[$i]['date'] = strftime(get_string('strftimedatetime'), $status->timecreated);
-            $timeline[$i]['content'] = $status->status;
+            $timeline[$i]['content'] = $status->status . ' ' . $status->jira_comment;
             $i++;
         }
 
