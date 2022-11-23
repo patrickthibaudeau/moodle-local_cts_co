@@ -31,12 +31,13 @@ $STATUS = new status();
 //$text = $H2T->get_text();
 //echo '<textarea>' . $text . '</textarea>';
 //
-//print_object($JIRA->get_issue('CTSCO-3'));
+print_object($JIRA->get_issue('CTSCO-3'));
 
-$ticket = $HALO->get_ticket(23128);
+//$ticket = $HALO->get_ticket(23128);
 //print_object($ticket);
 
-$JIRA->update_agent_from_halo(23128);
+//print_object($JIRA->update_agent_from_halo(110052,'CTSCO-3'));
+//print_object($JIRA->get_assignee_id('CTSCO-3', 'aalaily'));
 //print_object($HALO->add_action('thibaud', '0110043' , 'This is a note'));
 //print_object($HALO->get_users('thibaud'));
 //$new_ticket = $HALO->create_ticket('thibaud', 'New computer request', "I need a new computer<br>MacBook Pro 14");

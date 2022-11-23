@@ -92,6 +92,8 @@ class request
         $sql = "Select
                     r.id,
                     r.userid,
+                    r.halo_ticket_id,
+                    r.jira_issue_key,
                     r.summary,
                     r.usermodified,
                     r.latest_status as status,
@@ -141,6 +143,8 @@ class request
             $results[$i] = new \stdClass();
             $results[$i]->id = $r->id;
             $time_created = strftime(get_string('strftimedatetime'), $r->timecreated);
+            $results[$i]->halo_ticket_id = 'SR-'. $r->halo_ticket_id;
+            $results[$i]->jira_issue_key = $r->jira_issue_key;
             $results[$i]->timecreated = $time_created;
             $results[$i]->status = $r->status;
             $results[$i]->for_user = $r->firstname . ' ' . $r->lastname;

@@ -90,6 +90,21 @@ class jira extends webservice
 
     }
 
+    public function get_issue_meta($issue_id) {
+        global $CFG;
+        // Get meta data for JIRA Issue
+        $jira_issue = $this->get_data('issue/', 'GET', $issue_id . '/editmeta');
+
+        return $jira_issue;
+    }
+
+    public function get_assignee_id($issue_id, $username) {
+        global $CFG;
+
+        $user_info = $this->get_data('user/assignable/search?issueKey=' . $issue_id . '&query=' . $username, 'GET', '');
+        return $user_info;
+    }
+
     public function create_issue($summary, $description)
     {
         global $CFG;
@@ -112,17 +127,37 @@ class jira extends webservice
         $data = json_encode($data);
 
         $headers = self::get_headers('POST', $token);
-
         $new_issue = self::send_curl_request('POST', $headers, $CFG->jira_api_url . 'issue/', $data);
 
         return json_decode($new_issue);
     }
 
-    public function update_agent_from_halo($halo_ticket_id, $jira_issue_id) {
+    public function update_agent_from_halo($halo_ticket_id, $jira_issue_id)
+    {
+        global $CFG;
+
         $HALO = new haloitsm();
         $ticket = $HALO->get_ticket($halo_ticket_id);
         $agent = $HALO->get_agent_by_id($ticket->agent_id);
+        $agent_username = trim($agent->ad);
+        $token = $this->authenticate();
+        $issue_edit_meta = $this->get_issue_meta($jira_issue_id);
+        $update_assignee_url = $issue_edit_meta->fields->assignee->autoCompleteUrl . $agent_username;
+        // Prepare data
+        $data = [
+            "fields" => [
+                "assignee" => ["name" => "$agent_username"]
+            ]
+        ];
 
-        $issue = $this->get_issue();
+        $data = json_encode($data);
+//print_object($CFG->jira_api_url . 'issue/' . $jira_issue_id);
+//$data = '{"name":"thibaud"}';
+        // Update jira ISSUE
+        $headers = self::get_headers('POST', $token);
+        $update_issue = self::send_curl_request('POST', $headers, $CFG->jira_api_url . 'issue/' . $jira_issue_id . '/assignee', $data);
+
+        return json_decode($update_issue);
+
     }
 }

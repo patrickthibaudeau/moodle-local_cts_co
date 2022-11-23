@@ -13,6 +13,8 @@ $(document).ready(function () {
         "columns": [
             { "data": "timecreated" },
             { "data": "for_user" },
+            { "data": "halo_ticket_id" },
+            { "data": "jira_issue_key" },
             { "data": "status" },
         ],
         'columnDefs': [ {
