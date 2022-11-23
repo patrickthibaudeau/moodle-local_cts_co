@@ -10,6 +10,15 @@
     box-shadow: rgba(227, 24, 55, 0.35) 0px 5px 15px;
 }
 
+.halo_ticket_already_requested {
+    border-color: #e31837;
+    border-width: 3px;
+    box-shadow: rgba(227, 24, 55, 0.35) 0px 5px 15px;
+    animation-name: blinking;
+    animation-duration: 1s;
+    animation-iteration-count: 100;
+}
+
 .blinking {
     border: 2px solid #ffcc00;
     animation-name: blinking;

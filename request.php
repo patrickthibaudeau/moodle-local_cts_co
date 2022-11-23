@@ -104,6 +104,12 @@ base::getAlertModal(
     get_string('halo_ticket_not_found', 'local_cts_co')
 );
 
+base::getAlertModal(
+    'cts-exists',
+    get_string('halo_already_requested_title', 'local_cts_co'),
+    get_string('halo_already_requested', 'local_cts_co')
+);
+
 //**********************
 //*** DISPLAY FOOTER ***
 //**********************
