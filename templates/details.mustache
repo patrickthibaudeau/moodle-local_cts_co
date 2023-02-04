@@ -19,12 +19,8 @@
                         <b>{{#str}}ticket, local_cts_co{{/str}}:</b> <a href="{{halo_url}}/tickets?id={{halo_ticket_id}}
                         " target="_blank">
                         SR-{{halo_ticket_id}}</a><br>
-                        <b>{{#str}}jira_issue, local_cts_co{{/str}}:</b>
-                        {{#issue}}{{key}}{{/issue}}<br>
                         <b>{{#str}}requested_for, local_cts_co{{/str}}:</b> {{for_user}}<br>
-                        <b>{{#str}}requested_by, local_cts_co{{/str}}:</b> {{by_user}}<br>
                         <b>{{#str}}date_requested, local_cts_co{{/str}}:</b> {{timecreated}}<br>
-                        <b>{{#str}}due_date, local_cts_co{{/str}}:</b> {{#issue}}{{duedate_hr}}{{/issue}}<br>
                         <b>{{#str}}agent, local_cts_co{{/str}}:</b> {{agent}}<br>
                         <h5 class="mt-2">{{#str}}request, local_cts_co{{/str}}</h5>
                         <p>

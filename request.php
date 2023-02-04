@@ -75,7 +75,18 @@ if ($mform->is_cancelled()) {
         $params->usermodified = $USER->id;
         $params->timecreated = $ticket_timestamp;
 
-        $REQUEST->insert_record($params);
+        $new_id = $REQUEST->insert_record($params);
+
+        // Send message to user in HALO
+        // create HALO action on ticket
+        $note = "<p>Your request has been received. To track the progress of your order please click on the following link.</p>";
+        $note .= "<br><p><a href='$CFG->wwwroot/local/cts_co/details.php?id=$new_id'><b>Track Progress</b></a></p>";
+        // Get agent information
+        $agent = $HALO->get_agent_by_id($new_ticket->agent_id);
+        $action = $HALO->add_action(
+            $agent->ad, // agent username
+            $new_ticket->id,
+            $note);
 
         redirect($CFG->wwwroot . '/local/cts_co/index.php');
     } else {
