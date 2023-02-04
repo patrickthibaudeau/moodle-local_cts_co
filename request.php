@@ -48,7 +48,7 @@ if ($mform->is_cancelled()) {
     }
 
     // Fix date from HALO
-    $diff = 5 * 3600; //3600 = seconds in an hour
+    $diff = $CFG->halo_timezone_adjustment * 3600; //3600 = seconds in an hour
     $timestamp = strtotime($new_ticket->dateoccurred) - $diff;
     $date_time = \DateTime::createFromFormat('U', (int)$timestamp);
     $date_time->setTimezone(new \DateTimeZone($CFG->timezone));

@@ -83,6 +83,15 @@ if ($hassiteconfig) {
         PARAM_INT
     ));
 
+    // Halo Timezone adjustment
+    $settings->add(new admin_setting_configtext(
+        'halo_timezone_adjustment',
+        get_string('timezone_adjustment', 'local_cts_co'),
+        get_string('timezone_adjustment_help', 'local_cts_co'),
+        5,
+        PARAM_INT
+    ));
+
     // Jira Settings
     $settings->add(new admin_setting_heading(
         'jira_setting',
