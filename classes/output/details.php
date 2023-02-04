@@ -104,6 +104,7 @@ class details implements \renderable, \templatable
             'request_completed' => $process_class->request_completed,
             'new_request_stage' => $process_class->new_request_stage,
             'quote_process_stage' => $process_class->quote_process_stage,
+            'order_submitted_stage' => $process_class->order_submitted_stage,
             'with_supplier_stage' => $process_class->with_supplier_stage,
             'order_received_stage' => $process_class->order_received_stage,
             'inventory_preperation_stage' => $process_class->inventory_preperation_stage,
