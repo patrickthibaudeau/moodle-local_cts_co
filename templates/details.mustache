@@ -1,15 +1,15 @@
 <div class="container-fluid">
     {{#is_agent}}
-    <div class="row mt-2">
-        <div class="col">
-            <div class="float-left">
-                <a href="index.php" title="{{#str}}home, local_cts_co{{/str}}"
-                   class="btn btn-lg btn-outline-primary">
-                    {{#str}}home, local_cts_co{{/str}}
-                </a>
+        <div class="row mt-2">
+            <div class="col">
+                <div class="float-left">
+                    <a href="index.php" title="{{#str}}home, local_cts_co{{/str}}"
+                       class="btn btn-lg btn-outline-primary">
+                        {{#str}}home, local_cts_co{{/str}}
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
     {{/is_agent}}
     <div class="row mt-2">
         <div class="col-md-12">
@@ -32,17 +32,22 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="mb-3">{{#str}}process_status, local_cts_co{{/str}}</h3>
-                        <span class="badge badge-{{new_request_process}}">New Request</span><br>
-                        <span class="badge badge-{{quote_process}}">Quote Process</span><br>
-                        <span class="badge badge-{{order_process}}">Order Submitted</span><br>
-                        <span class="badge badge-{{receiving_process}}">Receiving/Inventory Stage</span><br>
-                        <span class="badge badge-{{order_complete}}">Order Completed</span><br>
-                        <span class="badge badge-{{inventory_process}}">Inventory Processing</span><br>
-                        <span class="badge badge-{{imaging_process}}">Imaging Stage</span><br>
-                        <span class="badge badge-{{setup_process}}">Setup /Deployment Stage</span><br>
-                        <span class="badge badge-{{pickup_process}}">Scheduled Pickup/Shipping</span><br>
-                        <span class="badge badge-{{deployment_process}}">Deployment</span><br>
-                        <span class="badge badge-{{deployment_process_completed}}">Deployment Completed</span><br>
+                        <span class="badge badge-{{new_request}}">New Request</span> {{#new_request_stage}}
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>{{/new_request_stage}}<br>
+                        <span class="badge badge-{{quote_process}}">Quote Process</span> {{#quote_process_stage}}
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>{{/quote_process_stage}}<br>
+                        <span class="badge badge-{{order_submitted}}">Order Submitted</span> {{#order_submitted_stage}}
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>{{/order_submitted_stage}}<br>
+                        <span class="badge badge-{{with_supplier}}">With Supplier</span {{#with_supplier_stage}}
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>{{/with_supplier_stage}}><br>
+                        <span class="badge badge-{{order_received}}">Order Received</span> {{#order_received_stage}}
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>{{/order_received_stage}}<br>
+                        <span class="badge badge-{{inventory_preperation}}">Inventory Preperation</span> {{#inventory_preperation_stage}}
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>{{/inventory_preperation_stage}}<br>
+                        <span class="badge badge-{{deployment}}">Deployment</span> {{#deployment_stage}}
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>{{/deployment_stage}}<br>
+                        <span class="badge badge-{{request_completed}}">Request Completed</span> {{#request_completed_stage}}
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>{{/request_completed_stage}}<br>
                     </div>
                 </div>
             </div>

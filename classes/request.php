@@ -148,7 +148,7 @@ class request
             $results[$i] = new \stdClass();
             $results[$i]->id = $r->id;
             $time_created = strftime(get_string('strftimedatetime'), $r->timecreated);
-            $results[$i]->halo_ticket_id = 'SR-'. $r->halo_ticket_id;
+            $results[$i]->halo_ticket_id = 'SR-' . $r->halo_ticket_id;
             $results[$i]->jira_issue_key = $r->jira_issue_key;
             $results[$i]->timecreated = $time_created;
             $results[$i]->status = $r->status;
@@ -184,181 +184,128 @@ class request
     }
 
     /**
-     * @param $step int 
+     * @param $step int
      * @return void
      */
-    public function current_status($step) {
+    public function current_status($step)
+    {
+        $new_request_stage = false;
+        $quote_process_stage = false;
+        $order_submitted_stage = false;
+        $with_supplier_stage = false;
+        $order_received_stage = false;
+        $inventory_preperation_stage = false;
+        $deployment_stage = false;
+        $request_completed_stage = false;
         switch ($step) {
             case 1:
-                $new_request= 'info';
+                $new_request = 'info';
                 $quote_process = 'secondary';
-                $order_process = 'secondary';
-                $receiving_process = 'secondary';
-                $order_complete = 'secondary';
-                $inventory_process = 'secondary';
-                $imaging_process = 'secondary';
-                $setup_process = 'secondary';
-                $pickup_process = 'secondary';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
+                $order_submitted = 'secondary';
+                $with_supplier = 'secondary';
+                $order_received = 'secondary';
+                $inventory_preperation = 'secondary';
+                $deployment = 'secondary';
+                $request_completed = 'secondary';
+                $new_request_stage = true;
                 break;
             case 2:
-                $new_request= 'success';
+                $new_request = 'success';
                 $quote_process = 'info';
-                $order_process = 'secondary';
-                $receiving_process = 'secondary';
-                $order_complete = 'secondary';
-                $inventory_process = 'secondary';
-                $imaging_process = 'secondary';
-                $setup_process = 'secondary';
-                $pickup_process = 'secondary';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
+                $order_submitted = 'secondary';
+                $with_supplier = 'secondary';
+                $order_received = 'secondary';
+                $inventory_preperation = 'secondary';
+                $deployment = 'secondary';
+                $request_completed = 'secondary';
+                $quote_process_stage = true;
                 break;
+
             case 3:
-                $new_request= 'success';
+                $new_request = 'success';
                 $quote_process = 'success';
-                $order_process = 'info';
-                $receiving_process = 'secondary';
-                $order_complete = 'secondary';
-                $inventory_process = 'secondary';
-                $imaging_process = 'secondary';
-                $setup_process = 'secondary';
-                $pickup_process = 'secondary';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
+                $order_submitted = 'info';
+                $with_supplier = 'secondary';
+                $order_received = 'secondary';
+                $inventory_preperation = 'secondary';
+                $deployment = 'secondary';
+                $request_completed = 'secondary';
+                $order_submitted_stage = true;
                 break;
             case 4:
-                $new_request= 'success';
+                $new_request = 'success';
                 $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'info';
-                $order_complete = 'secondary';
-                $inventory_process = 'secondary';
-                $imaging_process = 'secondary';
-                $setup_process = 'secondary';
-                $pickup_process = 'secondary';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
+                $order_submitted = 'success';
+                $with_supplier = 'info';
+                $order_received = 'secondary';
+                $inventory_preperation = 'secondary';
+                $deployment = 'secondary';
+                $request_completed = 'secondary';
+                $with_supplier_stage = true;
                 break;
             case 5:
-                $new_request= 'success';
+                $new_request = 'success';
                 $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'success';
-                $order_complete = 'info';
-                $inventory_process = 'secondary';
-                $imaging_process = 'secondary';
-                $setup_process = 'secondary';
-                $pickup_process = 'secondary';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
-                break;
-            case 5:
-                $new_request= 'success';
-                $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'success';
-                $order_complete = 'success';
-                $inventory_process = 'info';
-                $imaging_process = 'secondary';
-                $setup_process = 'secondary';
-                $pickup_process = 'secondary';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
-                break;
-            case 5:
-                $new_request= 'success';
-                $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'success';
-                $order_complete = 'success';
-                $inventory_process = 'success';
-                $imaging_process = 'info';
-                $setup_process = 'secondary';
-                $pickup_process = 'secondary';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
+                $order_submitted = 'success';
+                $with_supplier = 'success';
+                $order_received = 'info';
+                $inventory_preperation = 'secondary';
+                $deployment = 'secondary';
+                $request_completed = 'secondary';
+                $order_received_stage = true;
                 break;
             case 6:
-                $new_request= 'success';
+                $new_request = 'success';
                 $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'success';
-                $order_complete = 'success';
-                $inventory_process = 'success';
-                $imaging_process = 'success';
-                $setup_process = 'info';
-                $pickup_process = 'secondary';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
+                $order_submitted = 'success';
+                $with_supplier = 'success';
+                $order_received = 'success';
+                $inventory_preperation = 'info';
+                $deployment = 'secondary';
+                $request_completed = 'secondary';
+                $inventory_preperation_stage = true;
                 break;
             case 7:
-                $new_request= 'success';
+                $new_request = 'success';
                 $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'success';
-                $order_complete = 'success';
-                $inventory_process = 'success';
-                $imaging_process = 'success';
-                $setup_process = 'success';
-                $pickup_process = 'info';
-                $deployment_process= 'secondary';
-                $deployment_process_completed = 'secondary';
+                $order_submitted = 'success';
+                $with_supplier = 'success';
+                $order_received = 'success';
+                $inventory_preperation = 'success';
+                $deployment = 'info';
+                $request_completed = 'secondary';
+                $deployment_stage = true;
                 break;
             case 8:
-                $new_request= 'success';
+                $new_request = 'success';
                 $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'success';
-                $order_complete = 'success';
-                $inventory_process = 'success';
-                $imaging_process = 'success';
-                $setup_process = 'success';
-                $pickup_process = 'success';
-                $deployment_process= 'info';
-                $deployment_process_completed = 'secondary';
-                break;
-            case 9:
-                $new_request= 'success';
-                $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'success';
-                $order_complete = 'success';
-                $inventory_process = 'success';
-                $imaging_process = 'success';
-                $setup_process = 'success';
-                $pickup_process = 'success';
-                $deployment_process= 'success';
-                $deployment_process_completed = 'info';
-                break;
-            case 10:
-                $new_request= 'success';
-                $quote_process = 'success';
-                $order_process = 'success';
-                $receiving_process = 'success';
-                $order_complete = 'success';
-                $inventory_process = 'success';
-                $imaging_process = 'success';
-                $setup_process = 'success';
-                $pickup_process = 'success';
-                $deployment_process= 'success';
-                $deployment_process_completed = 'success';
+                $order_submitted = 'success';
+                $with_supplier = 'success';
+                $order_received = 'success';
+                $inventory_preperation = 'success';
+                $deployment = 'success';
+                $request_completed = 'success';
+                $request_completed_stage = true;
                 break;
         }
-        
+
         $results = new \stdClass();
         $results->new_request = $new_request;
         $results->quote_process = $quote_process;
-        $results->order_process = $order_process;
-        $results->receiving_process = $receiving_process;
-        $results->order_complete = $order_complete;
-        $results->inventory_process = $inventory_process;
-        $results->imaging_process = $imaging_process;
-        $results->setup_process = $setup_process;
-        $results->pickup_process = $pickup_process;
-        $results->deployment_process = $deployment_process;
-        $results->deployment_process_completed = $deployment_process_completed;
+        $results->order_submitted = $order_submitted;
+        $results->with_supplier = $with_supplier;
+        $results->order_received = $order_received;
+        $results->inventory_preperation = $inventory_preperation;
+        $results->deployment = $deployment;
+        $results->request_completed = $request_completed;
+        $results->new_request_stage = $new_request_stage;
+        $results->quote_process_stage = $quote_process_stage;
+        $results->order_submitted_stage = $order_submitted_stage;
+        $results->with_supplier_stage = $with_supplier_stage;
+        $results->order_received_stage = $order_received_stage;
+        $results->inventory_preperation_stage = $inventory_preperation_stage;
+        $results->deployment_stage = $deployment_stage;
+        $results->request_completed_stage = $request_completed_stage;
 
         return $results;
 
