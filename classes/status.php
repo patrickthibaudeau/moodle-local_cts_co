@@ -56,7 +56,7 @@ class status
 
     public function update_status($request_id, $jira_issue_key)
     {
-        global $DB;
+        global $CFG, $DB;
         // Get the last status
         $sql = "SELECT * FROM {cts_co_status} WHERE request_id=? ORDER BY timecreated DESC Limit 1";
         $result = $DB->get_record_sql($sql, [$request_id]);
@@ -95,6 +95,8 @@ class status
                 $DB->update_record('cts_co_request', $request_params);
 
                 $note = 'Your computer request status has been updated to ' . $issue->status;
+                $note .= "<br><p><a href='$CFG->wwwroot/local/cts_co/details.php?id=$request_id'><b>Track Progress</b></a></p>";
+
                 // Add comment to HALO action
                 if (isset($params->jira_comment_id)) {
                     $note .= '<p>' . $params->jira_comment . '</p>';
