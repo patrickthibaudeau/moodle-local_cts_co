@@ -67,11 +67,11 @@ class status
         // If the issue exists
         if ($issue) {
             // If issue status is not the same as result status, add new status record
-            if ($issue->status != $result->status) {
+            if (trim($issue->status) != trim($result->status)) {
                 $REQUEST = new request($request_id);
                 $params = new \stdClass();
                 $params->request_id = $request_id;
-                $params->status = $issue->status;
+                $params->status = trim($issue->status);
                 $params->agent = $issue->agent;
                 $params->timecreated = $issue->updated;
                 // Find out if comment already exists
