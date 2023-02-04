@@ -22,7 +22,7 @@ $formdata = new stdClass();
 $formdata->halo_ticket_id = '';
 $formdata->description_editor['text'] = '';
 $formdata->userid = [$USER->id => fullname($USER) . '(' . $USER->email . ')'];
-$formdata->summary = get_string('summary_title', 'local_cts_co');
+$formdata->summary = '';
 
 $mform = new \local_cts_co\request_form(null, array('formdata' => $formdata));
 if ($mform->is_cancelled()) {
@@ -47,6 +47,13 @@ if ($mform->is_cancelled()) {
         $new_ticket = $HALO->get_ticket($data->halo_ticket_id);
     }
 
+    // Fix date from HALO
+    $diff = 5 * 3600; //3600 = seconds in an hour
+    $timestamp = strtotime($new_ticket->dateoccurred) - $diff;
+    $date_time = \DateTime::createFromFormat('U', (int)$timestamp);
+    $date_time->setTimezone(new \DateTimeZone($CFG->timezone));
+    $ticket_timestamp = strtotime($date_time->format('Y-m-d H:i:s'));
+
     if (is_object($new_ticket)) {
         // Remove HTML tags for JIRA
         $H2T = new html2text($description);
@@ -66,7 +73,7 @@ if ($mform->is_cancelled()) {
         $params->jira_issue_key = $new_jira_issue->key;
         $params->jira_issue_url = $new_jira_issue->self;
         $params->usermodified = $USER->id;
-        $params->timecreated = strtotime($new_ticket->dateoccurred);
+        $params->timecreated = $ticket_timestamp;
 
         $REQUEST->insert_record($params);
 

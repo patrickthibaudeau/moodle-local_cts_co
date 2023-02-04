@@ -35,6 +35,7 @@ $(document).ready(function () {
                         // Convert results to object
                         let ticket = JSON.parse(result);
                         // Add details to content
+                        $('#id_summary').val(ticket.summary);
                         $('#id_description_editoreditable').html(ticket.details);
                         $('#id_halo_ticket_id').removeClass('blinking');
                         $('#id_halo_ticket_id').removeClass('halo_ticket_not_found');

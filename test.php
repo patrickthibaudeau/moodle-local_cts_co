@@ -34,8 +34,18 @@ $STATUS = new status();
 //print_object($issue);
 
 //print_object(strtotime('2022-11-23T03:22:32.1991177Z'));
-$ticket = $HALO->get_ticket(0110310);
-print_object($ticket);
+$ticket = $HALO->get_ticket('0198503');
+//print_object($ticket);
+$diff = 5 * 3600; //3600 = seconds in an hour
+$timestamp = strtotime($ticket->dateoccurred) - $diff;
+$date_time = \DateTime::createFromFormat('U', (int)$timestamp);
+echo $date_time->format('Y-m-d H:i:s'), PHP_EOL; // 2021-03-17 05:16:10
+echo '<br><br>';
+$date_time->setTimezone(new \DateTimeZone($CFG->timezone));
+echo $date_time->format('Y-m-d H:i:s'), PHP_EOL; // 2021-03-17 06:16:10
+$ticket_timestamp = strtotime($date_time->format('Y-m-d H:i:s'));
+
+echo '<p>' . $ticket_timestamp . '</p>';
 
 //print_object($JIRA->update_agent_from_halo(110052,'CTSCO-3'));
 //print_object($JIRA->get_assignee_id('CTSCO-3', 'aalaily'));
