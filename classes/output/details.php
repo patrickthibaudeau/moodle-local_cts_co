@@ -100,6 +100,7 @@ class details implements \renderable, \templatable
             'with_supplier' => $process_class->with_supplier,
             'order_received' => $process_class->order_received,
             'inventory_preperation' => $process_class->inventory_preperation,
+            'deployment' => $process_class->deployment,
             'request_completed' => $process_class->request_completed,
             'new_request_stage' => $process_class->new_request_stage,
             'quote_process_stage' => $process_class->quote_process_stage,
