@@ -49,6 +49,12 @@ class details implements \renderable, \templatable
         $STATUS = new status();
         $JIRA = new jira();
         $HALO = new haloitsm();
+        // Is user an agent
+        $context = \context_system::instance();
+        $is_agent = false;
+        if (has_capability('local/cts_co:access_jira', $context)) {
+            $is_agent = true;
+        }
         // Update status for this record
         $STATUS->update_status($this->id, $REQUEST->get_jira_issue_key());
 
@@ -99,6 +105,7 @@ class details implements \renderable, \templatable
             'pickup_process' => $process_class->pickup_process,
             'deployment_process' => $process_class->deployment_process,
             'deployment_process_completed' => $process_class->deployment_process_completed,
+            'is_agent' => $is_agent
         ];
 
         return $data;
