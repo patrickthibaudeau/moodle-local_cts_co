@@ -95,7 +95,7 @@ class status
                 $DB->update_record('cts_co_request', $request_params);
 
                 $note = 'Your computer request status has been updated to ' . $issue->status;
-                $note .= "<br><p><a href='$CFG->wwwroot/local/cts_co/details.php?id=$request_id'><b>Track Progress</b></a></p>";
+                $note .= "<br><br><p><a href='$CFG->wwwroot/local/cts_co/details.php?id=$request_id'><b>Track Progress</b></a></p>";
 
                 // Add comment to HALO action
                 if (isset($params->jira_comment_id)) {
