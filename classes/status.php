@@ -101,9 +101,14 @@ class status
                 if (isset($params->jira_comment_id)) {
                     $note .= '<p>' . $params->jira_comment . '</p>';
                 }
+
+                $agent = $issue->agent;
+                if (!$agent) {
+                    $agent = 'rsambhi';
+                }
                 // create HALO action on ticket
                 $action = $HALO->add_action(
-                    $issue->agent,
+                    $agent,
                     $REQUEST->get_halo_ticket_id(),
                     $note);
 
