@@ -61,7 +61,7 @@ if ($mform->is_cancelled()) {
         // Add HALO Ticket ID to JIRA description
         $jira_description .= "\n\nHalo Ticket ID: " . $new_ticket->id;
         // Create JIRA issue
-        $new_jira_issue = $JIRA->create_issue($data->summary . ' - SR-' . $new_ticket->id, $jira_description);
+        $new_jira_issue = $JIRA->create_issue('SR-' . $new_ticket->id . ' - ' .$data->summary  , $jira_description);
 
         // Create request record
         $params = new stdClass();
