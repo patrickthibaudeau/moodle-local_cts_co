@@ -7,6 +7,18 @@ use core\notification;
 class status
 {
     /**
+     * Set constants for process steps
+     */
+    const STEP_NEW = 1;
+    const STEP_QUOTE = 2;
+    const STEP_PENDING = 3;
+    const STEP_WITH_VENDOR = 4;
+    const STEP_ORDER_RECIEVED = 5;
+    const STEP_INVENTORY_PREPERATION = 6;
+    const STEP_DEPLOYMENT = 7;
+    const STEP_COMPLETED = 8;
+
+    /**
      * @var string
      */
     protected $table;

@@ -56,10 +56,10 @@ class details implements \renderable, \templatable
             $is_agent = true;
         }
         // Update status for this record
-        $STATUS->update_status($this->id, $REQUEST->get_jira_issue_key());
+//        $STATUS->update_status($this->id, $REQUEST->get_jira_issue_key());
 
         $results = $REQUEST->get_request('ASC');
-        $issue = $JIRA->get_issue($REQUEST->get_jira_issue_key());
+//        $issue = $JIRA->get_issue($REQUEST->get_jira_issue_key());
 
         $ticket = $HALO->get_ticket($results->request->halo_ticket_id);
         $agent = $HALO->get_agent_by_id($ticket->agent_id);

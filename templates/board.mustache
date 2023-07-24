@@ -1,0 +1,93 @@
+<style>
+    .board-container {width: 20%; float:left;clear: right;margin:10px; border-radius: 5px;}
+    .sortable { list-style-type: none; margin:0; padding:2px; min-height:30px; border-radius: 5px;}
+    .sortable li { margin: 3px 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px;}
+    .sortable li span { position: absolute; margin-left: -1.3em; }
+
+    .board-card{background-color:white;border-radius:3px;}
+</style>
+<div class="container-fluid">
+    {{#is_agent}}
+        <div class="row mt-2">
+            <div class="col">
+                <div class="float-left">
+                    <a href="index.php" title="{{#str}}home, local_cts_co{{/str}}"
+                       class="btn btn-lg btn-outline-primary">
+                        {{#str}}home, local_cts_co{{/str}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    {{/is_agent}}
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card board-container">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}new_request, local_cts_co{{/str}}</h3>
+                        <ul class="sortable">
+                            {{#new}}
+                                <li class="board-card">{{{summary}}}</li>
+                            {{/new}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}quote_process, local_cts_co{{/str}}</h3>
+                        <ul class="sortable">
+                            {{#quote_process}}
+                                <li>{{{summary}}}</li>
+                            {{/quote_process}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}pending_approval, local_cts_co{{/str}}</h3>
+                        <ul class="sortable">
+                            {{#pending_approval}}
+                                <li>{{{summary}}}</li>
+                            {{/pending_approval}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}with_vendor, local_cts_co{{/str}}</h3>
+                        <ul class="sortable">
+                            {{#with_vendor}}
+                                <li>{{{summary}}}</li>
+                            {{/with_vendor}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}order_received, local_cts_co{{/str}}</h3>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}inventory_preparation, local_cts_co{{/str}}</h3>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}deployment, local_cts_co{{/str}}</h3>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-3">{{#str}}request_completed, local_cts_co{{/str}}</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -162,5 +162,53 @@ function xmldb_local_cts_co_upgrade($oldversion)
         // Cts_co savepoint reached.
         upgrade_plugin_savepoint(true, 2022112300, 'local', 'cts_co');
     }
+
+    if ($oldversion < 2023072001) {
+
+        // Define field status_code to be added to cts_co_request.
+        $table = new xmldb_table('cts_co_request');
+        $field = new xmldb_field('status_code', XMLDB_TYPE_INTEGER, '2', null, null, null, '1', 'due_date');
+
+        // Conditionally launch add field status_code.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $sql_quote_process = "UPDATE {cts_co_request} SET status_code=2 WHERE latest_status='Quote Process'";
+        $sql_pending_approval = "UPDATE {cts_co_request} SET status_code=3 WHERE latest_status='Pending Approval (SmartBuy)'";
+        $sql_with_vendor = "UPDATE {cts_co_request} SET status_code=4 WHERE latest_status='With Vendor'";
+        $sql_order_received = "UPDATE {cts_co_request} SET status_code=5 WHERE latest_status='Order Received (CTS)'";
+        $sql_inventory_preperation = "UPDATE {cts_co_request} SET status_code=6 WHERE latest_status='Inventory Preperation'";
+        $sql_deployment = "UPDATE {cts_co_request} SET status_code=7 WHERE latest_status='Deployment'";
+        $sql_completed = "UPDATE {cts_co_request} SET status_code=8 WHERE latest_status='Request Completed'";
+
+        $DB->execute($sql_quote_process);
+        $DB->execute($sql_pending_approval);
+        $DB->execute($sql_with_vendor);
+        $DB->execute($sql_order_received);
+        $DB->execute($sql_inventory_preperation);
+        $DB->execute($sql_deployment);
+        $DB->execute($sql_completed);
+
+
+        // Cts_co savepoint reached.
+        upgrade_plugin_savepoint(true, 2023072001, 'local', 'cts_co');
+    }
+
+    if ($oldversion < 2023072002) {
+
+        // Define field agent_id to be added to cts_co_request.
+        $table = new xmldb_table('cts_co_request');
+        $field = new xmldb_field('agent_id', XMLDB_TYPE_INTEGER, '10', null, null, null, '0', 'due_date');
+
+        // Conditionally launch add field agent_id.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Cts_co savepoint reached.
+        upgrade_plugin_savepoint(true, 2023072002, 'local', 'cts_co');
+    }
+
     return true;
 }
