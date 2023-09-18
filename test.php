@@ -34,10 +34,10 @@ $STATUS = new status();
 //print_object($issue);
 
 //print_object(strtotime('2022-11-23T03:22:32.1991177Z'));
-$ticket = $HALO->get_ticket('0198503');
+$ticket = $HALO->get_cts_statuses();
 //print_object($ticket);
-$agent = $HALO->get_agent_by_id($ticket->agent_id);
-print_object($agent);
+//$agent = $HALO->get_agent_by_id($ticket->agent_id);
+print_object($ticket);
 
 //print_object($JIRA->update_agent_from_halo(110052,'CTSCO-3'));
 //print_object($JIRA->get_assignee_id('CTSCO-3', 'aalaily'));

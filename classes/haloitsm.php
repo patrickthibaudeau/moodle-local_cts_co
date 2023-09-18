@@ -44,7 +44,7 @@ class haloitsm extends webservice
         $token = $this->authenticate();
         if ($token) {
             $headers = self::get_headers('GET', $token);
-            $request_url = $CFG->halo_api_url . $function .  $params;
+            $request_url = $CFG->halo_api_url . $function . $params;
             $result = self::send_curl_request($method, $headers, $request_url, $params);
 
             return json_decode($result);
@@ -81,12 +81,14 @@ class haloitsm extends webservice
         return false;
     }
 
-    public function get_user_by_id($id) {
+    public function get_user_by_id($id)
+    {
         global $CFG;
         return $this->get_data('Users/', 'GET', $id);
     }
 
-    public function get_agent_by_id($id) {
+    public function get_agent_by_id($id)
+    {
         global $CFG;
         return $this->get_data('Agent/', 'GET', $id);
     }
@@ -99,7 +101,7 @@ class haloitsm extends webservice
     public function get_ticket($ticket_id)
     {
         global $CFG;
-        return $this->get_data('Tickets/', 'GET',  $ticket_id);
+        return $this->get_data('Tickets/', 'GET', $ticket_id);
     }
 
     /**
@@ -240,5 +242,38 @@ class haloitsm extends webservice
         } else {
             return false;
         }
+    }
+
+    /**
+     * Get all actions for a ticket
+     * @param $ticket_id
+     * @return false|mixed
+     */
+    public function get_actions($ticket_id)
+    {
+        global $CFG;
+        $token = $this->authenticate();
+        return $this->get_data('Actions', 'GET', '?ticket_id=' . $ticket_id);
+    }
+
+    /**
+     * @return array
+     */
+    public function get_cts_statuses()
+    {
+        global $CFG;
+        $token = $this->authenticate();
+        $statuses = array();
+        $statuses[] = $this->get_status(1);
+        $statuses[] = $this->get_status(44);
+        $statuses[] = $this->get_status(48);
+        $statuses[] = $this->get_status(17);
+        $statuses[] = $this->get_status(18);
+        $statuses[] = $this->get_status(5);
+        $statuses[] = $this->get_status(47);
+        $statuses[] = $this->get_status(46);
+        $statuses[] = $this->get_status(8);
+
+        return $statuses;
     }
 }
