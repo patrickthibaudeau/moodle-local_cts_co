@@ -276,4 +276,82 @@ class haloitsm extends webservice
 
         return $statuses;
     }
+
+    /**
+     * Convert date to timestamp
+     * @param $date
+     * @return false|int
+     * @throws \Exception
+     */
+    public function convert_halo_date_to_timestamp($date)
+    {
+        global $CFG;
+
+        $diff = $CFG->halo_timezone_adjustment * 3600; //3600 = seconds in an hour
+        $timestamp = strtotime($date) - $diff;
+        $date_time = \DateTime::createFromFormat('U', (int)$timestamp);
+        $date_time->setTimezone(new \DateTimeZone($CFG->timezone));
+        return strtotime($date_time->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * Given the number of seconds, convert to days, hours, minutes, seconds
+     * @param $seconds
+     * @return void
+     */
+    public function convert_seconds_to_days($seconds)
+    {
+        $day = floor($seconds / (24 * 3600));
+
+        $seconds = ($seconds % (24 * 3600));
+        $hour = $seconds / 3600;
+
+        $seconds %= 3600;
+        $minutes = $seconds / 60;
+
+        $seconds %= 60;
+        $seconds = $seconds;
+
+        return "$day days $hour hours $minutes minutes $seconds seconds";
+
+    }
+
+    /**
+     * Returns timeline data for a ticket
+     * @return \stdClass
+     * @throws \Exception
+     */
+    public function get_timeline($ticket_id)
+    {
+        // get the actions for the ticket
+        $actions = $this->get_actions($ticket_id);
+        // Put actions in decending order
+        $actions_reversed = array_reverse($actions->actions);
+        $timeline = array();
+        $i = 0;
+        foreach ($actions_reversed as $action) {
+            if ($action->old_status != $action->new_status) {
+                $timeline[$i]['date'] = date(
+                    'D M j, Y h:i A',
+                    $this->convert_halo_date_to_timestamp($action->actionarrivaldate)
+                );
+                $timeline[$i]['content'] = $action->new_status_name;
+                $timeline[$i]['timestamp'] = $this->convert_halo_date_to_timestamp($action->actionarrivaldate);
+                $i++;
+            }
+        }
+        $end_key = count($timeline) - 1;
+        $time_taken = $timeline[$end_key]['timestamp'] - $timeline[0]['timestamp'];
+
+        // Remove timestamp from timeline
+        for ($i = 0; $i < count($timeline); $i++) {
+            unset($timeline[$i]['timestamp']);
+        }
+
+        $data = new \stdClass();
+        $data->timeline = $timeline;
+        $data->time_taken = $time_taken;
+
+        return $data;
+    }
 }
