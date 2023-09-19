@@ -351,7 +351,7 @@ class haloitsm extends webservice
         $actions_reversed = array_reverse($actions->actions);
         // Get all accepted statuses
         $accepted_statuses = $this->get_cts_status_ids();
-
+        // Set variables
         $timeline = array();
         $i = 0;
         $compare_key = 0;
