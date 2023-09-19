@@ -371,6 +371,7 @@ class haloitsm extends webservice
             if (
                 ($value['status_id'] == 0) ||
                 ($value['status_id'] == 2) ||
+                ($value['status_id'] == 4) ||
                 ($value['status_id'] == 21)
             ) {
                 unset($timeline[$key]);
