@@ -1,6 +1,10 @@
 $(document).ready(function () {
     let events = JSON.parse($('#timeline').val());
     let numberOfItems = $("#number-of-items").val();
+    // Number of events per slide should never be more than 9
+    if (numberOfItems > 9) {
+        numberOfItems = 9;
+    }
     $('#my-timeline').roadmap(events, {
         eventsPerSlide: numberOfItems,
         slide: 1,
