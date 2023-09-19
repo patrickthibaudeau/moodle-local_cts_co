@@ -281,7 +281,8 @@ class haloitsm extends webservice
      * Array of status IDS used by CTS
      * @return array
      */
-    private function get_cts_status_ids() {
+    private function get_cts_status_ids()
+    {
         $statuses = array();
         $statuses[] = 1;
         $statuses[] = 44;
@@ -370,7 +371,8 @@ class haloitsm extends webservice
                 $timeline[$i]['timestamp'] = isset($action->datetime) ? $this->convert_halo_date_to_timestamp
                 ($action->datetime
                 ) : 0;
-                $timeline[$i]['content'] = $action->new_status_name;
+                $timeline[$i]['content'] = '<h3><span class="badge badge-success text-light">Completed</span></h3>' .
+                    $action->new_status_name;
                 $timeline[$i]['status_id'] = $action->new_status;
                 $compare_key = $i;
             }
@@ -399,6 +401,11 @@ class haloitsm extends webservice
         }
         // Get key of accepted statuses based on $last_status id
         $status_start_key = array_search($last_status, $accepted_statuses);
+
+        $timeline[$last_key]['content'] = str_replace(
+            '<h3><span class="badge badge-success text-light">Completed</span></h3>',
+            '<h3><span class="badge badge-info text-light">In Progress</span></h3>',
+            $timeline[$last_key]['content']);
 
         $z = count($timeline);
         // Add remaining steps in timeline
