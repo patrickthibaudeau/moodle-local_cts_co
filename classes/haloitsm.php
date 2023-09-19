@@ -403,7 +403,7 @@ class haloitsm extends webservice
         $z = count($timeline);
         // Add remaining steps in timeline
         for ($x = $status_start_key + 1; $x < count($accepted_statuses); $x++) {
-            $timeline[$z]['date'] = 'Pending';
+            $timeline[$z]['date'] = '<h3><span class="badge badge-warning text-light">Pending</span></h3>';
             $timeline[$z]['timestamp'] = 0;
             $timeline[$z]['content'] = $this->get_status($accepted_statuses[$x])->name;
             $timeline[$z]['status_id'] = $accepted_statuses[$x];
