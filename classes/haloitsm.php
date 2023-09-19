@@ -43,7 +43,7 @@ class haloitsm extends webservice
         global $CFG;
         $token = $this->authenticate();
         if ($token) {
-            $headers = self::get_headers('GET', $token);
+            $headers = self::get_headers($token, 'GET');
             $request_url = $CFG->halo_api_url . $function . $params;
             $result = self::send_curl_request($method, $headers, $request_url, $params);
 
@@ -200,7 +200,7 @@ class haloitsm extends webservice
 
             $data = "[" . json_encode($data) . "]";
 
-            $headers = self::get_headers('POST', $token);
+            $headers = self::get_headers($token, 'POST');
             $new_ticket = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Tickets', $data);
 
             return json_decode($new_ticket);
@@ -235,7 +235,7 @@ class haloitsm extends webservice
 
             $data = "[" . json_encode($data) . "]";
 
-            $headers = self::get_headers('POST', $token);
+            $headers = self::get_headers($token, 'POST');
             $new_action = self::send_curl_request('POST', $headers, $CFG->halo_api_url . 'Actions', $data);
 
             return json_decode($new_action);
@@ -302,17 +302,20 @@ class haloitsm extends webservice
     public function convert_seconds_to_days($seconds)
     {
         $day = floor($seconds / (24 * 3600));
+        $day = (int)$day;
 
         $seconds = ($seconds % (24 * 3600));
         $hour = $seconds / 3600;
+        $hour = (int)$hour;
 
         $seconds %= 3600;
         $minutes = $seconds / 60;
+        $minutes = (int)$minutes;
 
         $seconds %= 60;
-        $seconds = $seconds;
+        $seconds = (int)$seconds;
 
-        return "$day days $hour hours $minutes minutes $seconds seconds";
+        return "$day day(s) $hour hour(s) $minutes minute(s) $seconds second(s)";
 
     }
 
@@ -327,26 +330,42 @@ class haloitsm extends webservice
         $actions = $this->get_actions($ticket_id);
         // Put actions in decending order
         $actions_reversed = array_reverse($actions->actions);
+//        print_object($actions_reversed);
         $timeline = array();
         $i = 0;
         foreach ($actions_reversed as $action) {
-            if ($action->old_status != $action->new_status) {
-                $timeline[$i]['date'] = date(
-                    'D M j, Y h:i A',
-                    $this->convert_halo_date_to_timestamp($action->actionarrivaldate)
-                );
+            if (($action->old_status != $action->new_status)) {
+                if (isset($action->actionarrivaldate)){
+                    $timeline[$i]['date'] = date(
+                        'M j, Y h:i A',
+                        $this->convert_halo_date_to_timestamp($action->actionarrivaldate)
+                    );
+                    $timeline[$i]['timestamp'] = $this->convert_halo_date_to_timestamp($action->actionarrivaldate);
+                } else {
+                    $timeline[$i]['date'] = '';
+                    $timeline[$i]['timestamp'] = 0;
+                }
                 $timeline[$i]['content'] = $action->new_status_name;
-                $timeline[$i]['timestamp'] = $this->convert_halo_date_to_timestamp($action->actionarrivaldate);
+                $timeline[$i]['status_id'] = $action->new_status;
                 $i++;
             }
         }
+
+        // Remove blanks, in progress, updated
+        for ($i = 0; $i <= count($timeline); $i++) {
+            if (
+                ($timeline[$i]['status_id'] == 0) ||
+                ($timeline[$i]['status_id'] == 2) ||
+                ($timeline[$i]['status_id'] == 21)
+            ) {
+                unset($timeline[$i]);
+            }
+        }
+
+        // Calculate time taken
+        $timeline = array_values($timeline);
         $end_key = count($timeline) - 1;
         $time_taken = $timeline[$end_key]['timestamp'] - $timeline[0]['timestamp'];
-
-        // Remove timestamp from timeline
-        for ($i = 0; $i < count($timeline); $i++) {
-            unset($timeline[$i]['timestamp']);
-        }
 
         $data = new \stdClass();
         $data->timeline = $timeline;

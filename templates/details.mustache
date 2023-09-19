@@ -1,14 +1,17 @@
-<div class="container-fluid">
+<div class="row mt-3">
+    <div class="col">
 
-    <h1>SR-{{ticket_id}}</h1>
-    <div class="row mt-3">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="mb-3">{{#str}}timeline, local_cts_co{{/str}}</h3>
-                    <input type="hidden" id="timeline" value="{{timeline}}">
-                    <div id="my-timeline"></div>
-                </div>
+        <div class="card">
+            <h1 class="card-header">
+                SR-{{ticket_id}}
+                <a href="index.php" class="btn btn-primary btn-lg float-right">Back</a>
+            </h1>
+            <div class="card-body">
+                <h3 class="mb-3">{{#str}}timeline, local_cts_co{{/str}}</h3>
+                <input type="hidden" id="timeline" value="{{timeline}}">
+                <div id="my-timeline"></div>
+                <div class="alert alert-info mt-3" style="text-align: center;">
+                    {{{time_taken}}}
             </div>
         </div>
     </div>

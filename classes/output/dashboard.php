@@ -34,21 +34,7 @@ class dashboard implements \renderable, \templatable {
     public function export_for_template(\renderer_base $output) {
         global $USER, $CFG, $DB;
 
-        $context = \context_system::instance();
-        // Can user access Jira
-        $can_access_jira = false;
-        $jira_board = '';
-        $jira_url = '';
-        if (has_capability('local/cts_co:access_jira', $context)) {
-            $can_access_jira = true;
-            $jira_board = $CFG->jira_board;
-            $jira_url = $CFG->jira_url;
-        }
-
         $data = [
-            'can_access_jira' => $can_access_jira,
-            'jira_board' => $jira_board,
-            'jira_url' => $jira_url,
         ];
         return $data;
     }

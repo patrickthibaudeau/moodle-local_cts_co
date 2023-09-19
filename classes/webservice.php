@@ -44,7 +44,7 @@ abstract class webservice
      * @param $token
      * @return string[]
      */
-    protected function get_headers($method = 'GET', $token) {
+    protected function get_headers($token, $method = 'GET') {
         if ($method == 'GET') {
             $headers = array(
                 "Accept: application/json",

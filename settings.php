@@ -92,62 +92,6 @@ if ($hassiteconfig) {
         PARAM_INT
     ));
 
-    // Jira Settings
-    $settings->add(new admin_setting_heading(
-        'jira_setting',
-        get_string('jira_settings', 'local_cts_co'),
-        ''
-    ));
-    // Jira personal access token
-    $settings->add(new admin_setting_configtext(
-        'jira_personal_access_token',
-        get_string('personal_access_token', 'local_cts_co'),
-        get_string('personal_access_token_help', 'local_cts_co'),
-        '',
-        PARAM_TEXT
-    ));
-    // Jira API URL
-    $settings->add(new admin_setting_configtext(
-        'jira_api_url',
-        get_string('api_url', 'local_cts_co'),
-        get_string('api_url_help', 'local_cts_co'),
-        '',
-        PARAM_TEXT
-    ));
-    // Jira Project Key
-    $settings->add(new admin_setting_configtext(
-        'jira_project_key',
-        get_string('project_key', 'local_cts_co'),
-        get_string('project_key_help', 'local_cts_co'),
-        '',
-        PARAM_TEXT
-    ));
-    // Jira Issue type
-    $settings->add(new admin_setting_configtext(
-        'jira_issue_type',
-        get_string('issue_type', 'local_cts_co'),
-        get_string('issue_type_help', 'local_cts_co'),
-        'Request',
-        PARAM_TEXT
-    ));
-    // Jira URL
-    $settings->add(new admin_setting_configtext(
-        'jira_url',
-        get_string('jira_url', 'local_cts_co'),
-        get_string('jira_url_help', 'local_cts_co'),
-        '',
-        PARAM_TEXT
-    ));
-    // Jira Board ID
-    $settings->add(new admin_setting_configtext(
-        'jira_board',
-        get_string('jira_board', 'local_cts_co'),
-        get_string('jira_board_help', 'local_cts_co'),
-        '',
-        PARAM_TEXT
-    ));
-
-
 }
 
 

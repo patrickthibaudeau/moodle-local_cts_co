@@ -7,7 +7,7 @@ use local_cts_co\request;
 // CHECK And PREPARE DATA
 global $CFG, $OUTPUT, $SESSION, $PAGE, $DB, $COURSE, $USER;
 
-require_login(1, false);
+require_login(1, true);
 $context = context_system::instance();
 
  \local_cts_co\base::page($CFG->wwwroot . '/local/cto_co/index.php', get_string('pluginname', 'local_cts_co'), '', $context);

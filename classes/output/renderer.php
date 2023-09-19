@@ -30,15 +30,4 @@ class renderer extends \plugin_renderer_base {
         return $this->render_from_template('local_cts_co/details', $data);
     }
 
-    /**
-     * Kanban board
-     * @param \templatable $details
-     * @return bool|string
-     * @throws \moodle_exception
-     */
-    public function render_board(\templatable $board) {
-        $data = $board->export_for_template($this);
-        return $this->render_from_template('local_cts_co/board', $data);
-    }
-
 }
