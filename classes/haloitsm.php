@@ -330,40 +330,72 @@ class haloitsm extends webservice
         $actions = $this->get_actions($ticket_id);
         // Put actions in decending order
         $actions_reversed = array_reverse($actions->actions);
-//        print_object($actions_reversed);
         $timeline = array();
         $i = 0;
         foreach ($actions_reversed as $action) {
-            if (($action->old_status != $action->new_status)) {
-                if (isset($action->actionarrivaldate)){
+            if ($i > 0) {
+                if (($action->new_status != $actions_reversed[$i - 1]->new_status)) {
+                    if (isset($action->datetime)){
+                        $timeline[$i]['date'] = date(
+                            'M j, Y h:i A',
+                            $this->convert_halo_date_to_timestamp($action->datetime)
+                        );
+                        $timeline[$i]['timestamp'] = $this->convert_halo_date_to_timestamp($action->datetime);
+                    } else {
+                        $timeline[$i]['date'] = '';
+                        $timeline[$i]['timestamp'] = 0;
+                    }
+                    $timeline[$i]['content'] = $action->new_status_name;
+                    $timeline[$i]['status_id'] = $action->new_status;
+                }
+            } else {
+                if (isset($action->datetime)){
                     $timeline[$i]['date'] = date(
                         'M j, Y h:i A',
-                        $this->convert_halo_date_to_timestamp($action->actionarrivaldate)
+                        $this->convert_halo_date_to_timestamp($action->datetime)
                     );
-                    $timeline[$i]['timestamp'] = $this->convert_halo_date_to_timestamp($action->actionarrivaldate);
+                    $timeline[$i]['timestamp'] = $this->convert_halo_date_to_timestamp($action->datetime);
                 } else {
                     $timeline[$i]['date'] = '';
                     $timeline[$i]['timestamp'] = 0;
                 }
                 $timeline[$i]['content'] = $action->new_status_name;
                 $timeline[$i]['status_id'] = $action->new_status;
-                $i++;
             }
+            $i++;
         }
-
+        //Reset array keys
+        $timeline = array_values($timeline);
         // Remove blanks, in progress, updated
-        for ($i = 0; $i <= count($timeline); $i++) {
+        foreach ($timeline as $key => $value) {
             if (
-                ($timeline[$i]['status_id'] == 0) ||
-                ($timeline[$i]['status_id'] == 2) ||
-                ($timeline[$i]['status_id'] == 21)
+                ($value['status_id'] == 0) ||
+                ($value['status_id'] == 2) ||
+                ($value['status_id'] == 21)
             ) {
-                unset($timeline[$i]);
+                unset($timeline[$key]);
             }
         }
 
         // Calculate time taken
         $timeline = array_values($timeline);
+
+        // Reiterate to remove any anomilies
+        $remove_keys = array();
+        foreach ($timeline as $key => $value) {
+            if (
+                (($key > 0) && ($value['status_id'] == $timeline[$key - 1]['status_id']))
+            ) {
+                $remove_keys[] = $key;
+            }
+        }
+
+        foreach($remove_keys as $key){
+            unset($timeline[$key]);
+        }
+        // Reset array keys
+        $timeline = array_values($timeline);
+
         if (count($timeline) > 1) {
             $end_key = count($timeline) - 1;
             $time_taken = $timeline[$end_key]['timestamp'] - $timeline[0]['timestamp'];
