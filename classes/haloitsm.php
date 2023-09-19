@@ -259,7 +259,7 @@ class haloitsm extends webservice
     /**
      * @return array
      */
-    public function get_cts_statuses()
+    public function get_cts_statuses_names()
     {
         global $CFG;
         $token = $this->authenticate();
@@ -273,6 +273,25 @@ class haloitsm extends webservice
         $statuses[] = $this->get_status(47);
         $statuses[] = $this->get_status(46);
         $statuses[] = $this->get_status(8);
+
+        return $statuses;
+    }
+
+    /**
+     * Array of status IDS used by CTS
+     * @return array
+     */
+    private function get_cts_status_ids() {
+        $statuses = array();
+        $statuses[] = 1;
+        $statuses[] = 44;
+        $statuses[] = 48;
+        $statuses[] = 17;
+        $statuses[] = 18;
+        $statuses[] = 5;
+        $statuses[] = 47;
+        $statuses[] = 46;
+        $statuses[] = 8;
 
         return $statuses;
     }
@@ -330,79 +349,65 @@ class haloitsm extends webservice
         $actions = $this->get_actions($ticket_id);
         // Put actions in decending order
         $actions_reversed = array_reverse($actions->actions);
+        // Get all accepted statuses
+        $accepted_statuses = $this->get_cts_status_ids();
+
         $timeline = array();
         $i = 0;
+        $compare_key = 0;
+
         foreach ($actions_reversed as $action) {
-            if ($i > 0) {
-                if (($action->new_status != $actions_reversed[$i - 1]->new_status)) {
-                    if (isset($action->datetime)){
-                        $timeline[$i]['date'] = date(
-                            'M j, Y h:i A',
-                            $this->convert_halo_date_to_timestamp($action->datetime)
-                        );
-                        $timeline[$i]['timestamp'] = $this->convert_halo_date_to_timestamp($action->datetime);
-                    } else {
-                        $timeline[$i]['date'] = '';
-                        $timeline[$i]['timestamp'] = 0;
-                    }
-                    $timeline[$i]['content'] = $action->new_status_name;
-                    $timeline[$i]['status_id'] = $action->new_status;
-                }
-            } else {
-                if (isset($action->datetime)){
-                    $timeline[$i]['date'] = date(
-                        'M j, Y h:i A',
-                        $this->convert_halo_date_to_timestamp($action->datetime)
-                    );
-                    $timeline[$i]['timestamp'] = $this->convert_halo_date_to_timestamp($action->datetime);
-                } else {
-                    $timeline[$i]['date'] = '';
-                    $timeline[$i]['timestamp'] = 0;
-                }
+            if (
+                in_array($action->new_status, $accepted_statuses) &&
+                ($i == 0 || $action->new_status != $actions_reversed[$compare_key]->new_status)
+            ) {
+                $timeline[$i]['date'] = isset($action->datetime) ? date(
+                    'M j, Y h:i A',
+                    $this->convert_halo_date_to_timestamp($action->datetime)
+                ) : '';
+                $timeline[$i]['timestamp'] = isset($action->datetime) ? $this->convert_halo_date_to_timestamp
+                ($action->datetime
+                ) : 0;
                 $timeline[$i]['content'] = $action->new_status_name;
                 $timeline[$i]['status_id'] = $action->new_status;
+                $compare_key = $i;
             }
             $i++;
         }
         //Reset array keys
         $timeline = array_values($timeline);
-        // Remove blanks, in progress, updated
-        foreach ($timeline as $key => $value) {
-            if (
-                ($value['status_id'] == 0) ||
-                ($value['status_id'] == 2) ||
-                ($value['status_id'] == 4) ||
-                ($value['status_id'] == 21)
-            ) {
-                unset($timeline[$key]);
-            }
+        // Get last key
+        if (count($timeline) > 0) {
+            $last_key = count($timeline) - 1;
+        } else {
+            $last_key = 0;
         }
-
-        // Calculate time taken
-        $timeline = array_values($timeline);
-
-        // Reiterate to remove any anomilies
-        $remove_keys = array();
-        foreach ($timeline as $key => $value) {
-            if (
-                (($key > 0) && ($value['status_id'] == $timeline[$key - 1]['status_id']))
-            ) {
-                $remove_keys[] = $key;
-            }
-        }
-
-        foreach($remove_keys as $key){
-            unset($timeline[$key]);
-        }
-        // Reset array keys
-        $timeline = array_values($timeline);
-
+        $last_key = count($timeline) - 1;
         if (count($timeline) > 1) {
-            $end_key = count($timeline) - 1;
-            $time_taken = $timeline[$end_key]['timestamp'] - $timeline[0]['timestamp'];
+            $time_taken = $timeline[$last_key]['timestamp'] - $timeline[0]['timestamp'];
         } else {
             $time_taken = 0;
         }
+
+        // Get last key Status
+        if (count($timeline) > 0) {
+            $last_status = $timeline[$last_key]['status_id'];
+        } else {
+            $last_status = 0;
+        }
+        // Get key of accepted statuses based on $last_status id
+        $status_start_key = array_search($last_status, $accepted_statuses);
+
+        $z = count($timeline);
+        // Add remaining steps in timeline
+        for ($x = $status_start_key + 1; $x < count($accepted_statuses); $x++) {
+            $timeline[$z]['date'] = 'Pending';
+            $timeline[$z]['timestamp'] = 0;
+            $timeline[$z]['content'] = $this->get_status($accepted_statuses[$x])->name;
+            $timeline[$z]['status_id'] = $accepted_statuses[$x];
+            $z++;
+        }
+
 
         $data = new \stdClass();
         $data->timeline = $timeline;
