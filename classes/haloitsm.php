@@ -410,7 +410,6 @@ class haloitsm extends webservice
             $z++;
         }
 
-
         $data = new \stdClass();
         $data->timeline = $timeline;
         $data->time_taken = $time_taken;
