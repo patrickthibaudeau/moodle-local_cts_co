@@ -1,8 +1,8 @@
 $(document).ready(function () {
-
     let events = JSON.parse($('#timeline').val());
+    let numberOfItems = $("#number-of-items").val();
     $('#my-timeline').roadmap(events, {
-        eventsPerSlide: 8,
+        eventsPerSlide: numberOfItems,
         slide: 1,
         prevArrow: '<i class="fa fa-angle-left"></i>',
         nextArrow: '<i class="fa fa-angle-right"></i>',

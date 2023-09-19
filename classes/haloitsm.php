@@ -420,6 +420,7 @@ class haloitsm extends webservice
         $data = new \stdClass();
         $data->timeline = $timeline;
         $data->time_taken = $time_taken;
+        $data->number_of_items = count($timeline);
 
         return $data;
     }

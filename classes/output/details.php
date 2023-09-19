@@ -60,7 +60,8 @@ class details implements \renderable, \templatable
         $data = [
             'ticket_id' => $this->id,
             'timeline' => json_encode($timeline_data->timeline),
-            'time_taken' => $time_taken
+            'time_taken' => $time_taken,
+            'number_of_items' => $timeline_data->number_of_items,
         ];
 
         return $data;
