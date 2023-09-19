@@ -371,7 +371,7 @@ class haloitsm extends webservice
                 $timeline[$i]['timestamp'] = isset($action->datetime) ? $this->convert_halo_date_to_timestamp
                 ($action->datetime
                 ) : 0;
-                $timeline[$i]['content'] = '<h3><span class="badge badge-success text-light">Completed</span></h3>' .
+                $timeline[$i]['content'] = '<h4><span class="badge badge-success text-light">Completed</span></h4>' .
                     $action->new_status_name;
                 $timeline[$i]['status_id'] = $action->new_status;
                 $compare_key = $i;
@@ -403,14 +403,14 @@ class haloitsm extends webservice
         $status_start_key = array_search($last_status, $accepted_statuses);
 
         $timeline[$last_key]['content'] = str_replace(
-            '<h3><span class="badge badge-success text-light">Completed</span></h3>',
-            '<h3><span class="badge badge-info text-light">In Progress</span></h3>',
+            '<h4><span class="badge badge-success text-light">Completed</span></h4>',
+            '<h4><span class="badge badge-info text-light">In Progress</span></h4>',
             $timeline[$last_key]['content']);
 
         $z = count($timeline);
         // Add remaining steps in timeline
         for ($x = $status_start_key + 1; $x < count($accepted_statuses); $x++) {
-            $timeline[$z]['date'] = '<h3><span class="badge badge-warning text-light">Pending</span></h3>';
+            $timeline[$z]['date'] = '<h4><span class="badge badge-warning text-light">Pending</span></h4>';
             $timeline[$z]['timestamp'] = 0;
             $timeline[$z]['content'] = $this->get_status($accepted_statuses[$x])->name;
             $timeline[$z]['status_id'] = $accepted_statuses[$x];
