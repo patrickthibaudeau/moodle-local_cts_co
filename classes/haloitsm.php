@@ -355,8 +355,10 @@ class haloitsm extends webservice
         $timeline = array();
         $i = 0;
         $compare_key = 0;
-
+        // Loop through all actions and create the timeline
         foreach ($actions_reversed as $action) {
+            // Only include those actions from accepted statuses
+            // Always compare to the last status to avoid duplicates
             if (
                 in_array($action->new_status, $accepted_statuses) &&
                 ($i == 0 || $action->new_status != $actions_reversed[$compare_key]->new_status)
@@ -382,7 +384,7 @@ class haloitsm extends webservice
         } else {
             $last_key = 0;
         }
-        $last_key = count($timeline) - 1;
+
         if (count($timeline) > 1) {
             $time_taken = $timeline[$last_key]['timestamp'] - $timeline[0]['timestamp'];
         } else {
