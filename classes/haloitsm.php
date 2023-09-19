@@ -364,8 +364,12 @@ class haloitsm extends webservice
 
         // Calculate time taken
         $timeline = array_values($timeline);
-        $end_key = count($timeline) - 1;
-        $time_taken = $timeline[$end_key]['timestamp'] - $timeline[0]['timestamp'];
+        if (count($timeline) > 1) {
+            $end_key = count($timeline) - 1;
+            $time_taken = $timeline[$end_key]['timestamp'] - $timeline[0]['timestamp'];
+        } else {
+            $time_taken = 0;
+        }
 
         $data = new \stdClass();
         $data->timeline = $timeline;
