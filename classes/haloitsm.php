@@ -352,6 +352,8 @@ class haloitsm extends webservice
         $actions_reversed = array_reverse($actions->actions);
         // Get all accepted statuses
         $accepted_statuses = $this->get_cts_status_ids();
+        // Get last status in list
+        $last_status_type_key = count($accepted_statuses) - 1;
         // Set variables
         $timeline = array();
         $i = 0;
@@ -402,20 +404,24 @@ class haloitsm extends webservice
         // Get key of accepted statuses based on $last_status id
         $status_start_key = array_search($last_status, $accepted_statuses);
 
-        $timeline[$last_key]['content'] = str_replace(
-            '<h4><span class="badge badge-success text-light">Completed</span></h4>',
-            '<h4><span class="badge badge-info text-light">In Progress</span></h4>',
-            $timeline[$last_key]['content']);
+        // Make the last status in timeline In Progress if not completed
+        if ($timeline[$last_key]['status_id'] != $accepted_statuses[$last_status_type_key]) {
+            $timeline[$last_key]['content'] = str_replace(
+                '<h4><span class="badge badge-success text-light">Completed</span></h4>',
+                '<h4><span class="badge badge-info text-light">In Progress</span></h4>',
+                $timeline[$last_key]['content']);
 
-        $z = count($timeline);
-        // Add remaining steps in timeline
-        for ($x = $status_start_key + 1; $x < count($accepted_statuses); $x++) {
-            $timeline[$z]['date'] = '<h4><span class="badge badge-warning text-light">Pending</span></h4>';
-            $timeline[$z]['timestamp'] = 0;
-            $timeline[$z]['content'] = $this->get_status($accepted_statuses[$x])->name;
-            $timeline[$z]['status_id'] = $accepted_statuses[$x];
-            $z++;
+            // Add remaining steps in timeline
+            $z = count($timeline);
+            for ($x = $status_start_key + 1; $x < count($accepted_statuses); $x++) {
+                $timeline[$z]['date'] = '<h4><span class="badge badge-warning text-light">Pending</span></h4>';
+                $timeline[$z]['timestamp'] = 0;
+                $timeline[$z]['content'] = $this->get_status($accepted_statuses[$x])->name;
+                $timeline[$z]['status_id'] = $accepted_statuses[$x];
+                $z++;
+            }
         }
+
 
         $data = new \stdClass();
         $data->timeline = $timeline;
