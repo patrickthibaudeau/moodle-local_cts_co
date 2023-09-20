@@ -2,10 +2,22 @@
     <div class="col">
 <input type="hidden" id="number-of-items" value="{{number_of_items}}">
         <div class="card">
-            <h1 class="card-header">
-                SR-{{ticket_id}}
-                <a href="index.php" class="btn btn-primary btn-lg float-right">Back</a>
-            </h1>
+            <div class="card-header">
+                <div class="row">
+                    <div  class="col-8">
+                        <h1>SR-{{ticket_id}}</h1>
+                </div>
+                                    <div class="col-4 d-flex justify-content-end">
+                                        <form class="form-inline">
+                                        <input type="text" class="form-control "  id="ticket_id" value="">
+                                            &nbsp;
+                                        <button type="button" class="btn btn-primary" id="get_ticket_details">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                        </form>
+                                    </div>
+                </div>
+            </div>
             <div class="card-body">
                 <h3 class="mb-3">{{#str}}timeline, local_cts_co{{/str}}</h3>
                 <input type="hidden" id="timeline" value="{{timeline}}">

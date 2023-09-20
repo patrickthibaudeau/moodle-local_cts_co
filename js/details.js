@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    let wwwroot = M.cfg.wwwroot;
     let events = JSON.parse($('#timeline').val());
     let numberOfItems = $("#number-of-items").val();
     // Number of events per slide should never be more than 9
@@ -13,5 +14,11 @@ $(document).ready(function () {
         onBuild: function() {
             console.log('onBuild event')
         }
+    });
+
+    $('#get_ticket_details').off();
+    $('#get_ticket_details').on('click', function () {
+        let ticket_id = $('#ticket_id').val();
+        window.location.href = wwwroot + "/local/cts_co/status.php?id=" + ticket_id;   //full row of array data
     });
 });

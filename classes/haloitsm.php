@@ -405,7 +405,7 @@ class haloitsm extends webservice
         $status_start_key = array_search($last_status, $accepted_statuses);
 
         // Make the last status in timeline In Progress if not completed
-        if ($timeline[$last_key]['status_id'] != $accepted_statuses[$last_status_type_key]) {
+        if (count($timeline) > 0 && $timeline[$last_key]['status_id'] != $accepted_statuses[$last_status_type_key]) {
             $timeline[$last_key]['content'] = str_replace(
                 '<h4><span class="badge badge-success text-light">Completed</span></h4>',
                 '<h4><span class="badge badge-info text-light">In Progress</span></h4>',
@@ -419,6 +419,14 @@ class haloitsm extends webservice
                 $timeline[$z]['content'] = $this->get_status($accepted_statuses[$x])->name;
                 $timeline[$z]['status_id'] = $accepted_statuses[$x];
                 $z++;
+            }
+        } else {
+            // Add remaining steps in timeline
+            for ($x = 0; $x < count($accepted_statuses); $x++) {
+                $timeline[$x]['date'] = '<h4><span class="badge badge-warning text-light">Pending</span></h4>';
+                $timeline[$x]['timestamp'] = 0;
+                $timeline[$x]['content'] = $this->get_status($accepted_statuses[$x])->name;
+                $timeline[$x]['status_id'] = $accepted_statuses[$x];
             }
         }
 
