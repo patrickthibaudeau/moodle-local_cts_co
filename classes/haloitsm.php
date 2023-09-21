@@ -419,6 +419,7 @@ public function x($ticket_id) {
         }
         //Reset array keys
         $timeline = array_values($timeline);
+//        print_object($timeline);
         // Get last key
         if (count($timeline) > 0) {
             $last_key = count($timeline) - 1;
@@ -440,7 +441,8 @@ public function x($ticket_id) {
         }
         // Get key of accepted statuses based on $last_status id
         $status_start_key = array_search($last_status, $accepted_statuses);
-
+//        print_object($accepted_statuses);
+//        print_object($status_start_key);
         // Make the last status in timeline In Progress if not completed
         if (count($timeline) > 0 && $timeline[$last_key]['status_id'] != $accepted_statuses[$last_status_type_key]) {
             $timeline[$last_key]['content'] = str_replace(
@@ -459,14 +461,13 @@ public function x($ticket_id) {
             }
         } else {
             // Add remaining steps in timeline
-            for ($x = 0; $x < count($accepted_statuses); $x++) {
+            for ($x = $i + 1; $x < count($accepted_statuses); $x++) {
                 $timeline[$x]['date'] = '<h4><span class="badge badge-warning text-light">Pending</span></h4>';
                 $timeline[$x]['timestamp'] = 0;
                 $timeline[$x]['content'] = $this->get_status($accepted_statuses[$x])->name;
                 $timeline[$x]['status_id'] = $accepted_statuses[$x];
             }
         }
-
 
         $data = new \stdClass();
         $data->timeline = $timeline;
