@@ -339,6 +339,42 @@ class haloitsm extends webservice
 
     }
 
+public function x($ticket_id) {
+
+	echo "=== Start Aladin testing ===<br>";
+	$actions = $this->get_actions($ticket_id);
+	$actions_reversed = array_reverse($actions->actions);
+
+	$temp = array();
+	$statuses = ["New", "New Request", "Quote Processing", "Awaiting Approval", "Approved", "With Supplier", "Computer Preparation", "Pending Deployment", "Resolved"];
+
+	foreach($actions_reversed as $action) {
+		if(in_array($action->new_status_name, $statuses)) {
+			array_push($temp, $action);
+		}
+	}
+	$timeline = array();
+
+	for($i=0; $i<count($temp); $i++) {
+		if($i==0) {
+			array_push($timeline, $temp[$i]);
+		}
+		else {
+			if($timeline[count($timeline)-1]->new_status_name != $temp[$i]->new_status_name) {
+				array_push($timeline, $temp[$i]);
+			}
+		}
+	}
+
+	foreach($timeline as $action) {
+		echo $action->new_status_name;
+		echo "|" . $action->datetime . "<br>";
+	}
+
+	echo "=== End Aladin Testing ===";
+
+}
+
     /**
      * Returns timeline data for a ticket
      * @return \stdClass
@@ -346,6 +382,7 @@ class haloitsm extends webservice
      */
     public function get_timeline($ticket_id)
     {
+	//$this->x($ticket_id);
         // get the actions for the ticket
         $actions = $this->get_actions($ticket_id);
         // Put actions in decending order
