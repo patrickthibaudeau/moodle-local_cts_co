@@ -306,12 +306,14 @@ class haloitsm extends webservice
     public function convert_halo_date_to_timestamp($date)
     {
         global $CFG;
-
-        $diff = $CFG->halo_timezone_adjustment * 3600; //3600 = seconds in an hour
-        $timestamp = strtotime($date) - $diff;
-        $date_time = \DateTime::createFromFormat('U', (int)$timestamp);
-        $date_time->setTimezone(new \DateTimeZone($CFG->timezone));
-        return strtotime($date_time->format('Y-m-d H:i:s'));
+        // Set the default timezone to America/Toronto
+        date_default_timezone_set($CFG->timezone);
+        // Convert the GMT date to a DateTime object
+        $gmt_date = new \DateTime($date, new \DateTimeZone('GMT'));
+        // Set the timezone to America/Toronto
+        $gmt_date->setTimezone(new \DateTimeZone($CFG->timezone));
+        // Get the timestamp
+        return $gmt_date->getTimestamp();
     }
 
     /**
