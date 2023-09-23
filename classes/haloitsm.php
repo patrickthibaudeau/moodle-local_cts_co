@@ -105,6 +105,26 @@ class haloitsm extends webservice
     }
 
     /**
+     * Returns basic ticket information that identifies
+     * Ticket Type, Team, Category 1, Category 2, Category 3
+     * @param string $name
+     * @return array
+     */
+    public function get_ticket_quickinfo($ticket_id) {
+        $ticket = $this->get_ticket($ticket_id);
+        $ticket_type = $this->get_ticket_type($ticket->tickettype_id);
+        $categories = new \stdClass();
+
+        $categories->team = $ticket->team;
+        $categories->tickettype_id = $ticket->tickettype_id;
+        $categories->tickettype_name = $ticket_type->name;
+        $categories->category_1 = $ticket->category_1;
+        $categories->category_2 = $ticket->category_2;
+        $categories->category_3 = $ticket->category_3;
+        return $categories;
+    }
+
+    /**
      * Returns all Ticket Types
      * @return mixed|void
      */
@@ -409,6 +429,8 @@ class haloitsm extends webservice
         $timeline = array();
         $i = 0;
         $compare_key = 0;
+        $last_status = 0;
+        $last_key = 0;
         // Loop through all actions and create the timeline
         foreach ($actions_reversed as $action) {
             // Only include those actions from accepted statuses
@@ -465,23 +487,14 @@ class haloitsm extends webservice
             }
         }
 
-        // Get last key
+        // Get last key and status
         if (count($timeline) > 0) {
             $last_key = count($timeline) - 1;
-        } else {
-            $last_key = 0;
+            $last_status = $timeline[$last_key]['status_id'];
         }
 
-        // Get last key Status
-        if (count($timeline) > 0) {
-            $last_status = $timeline[$last_key]['status_id'];
-        } else {
-            $last_status = 0;
-        }
         // Get key of accepted statuses based on $last_status id
         $status_start_key = array_search($last_status, $accepted_statuses);
-//        print_object($accepted_statuses);
-//        print_object($status_start_key);
         // Make the last status in timeline In Progress if not completed
         if (count($timeline) > 0 && $timeline[$last_key]['status_id'] != $accepted_statuses[$last_status_type_key]) {
             $timeline[$last_key]['content'] = str_replace(
