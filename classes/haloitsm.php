@@ -337,45 +337,50 @@ class haloitsm extends webservice
         $seconds %= 60;
         $seconds = (int)$seconds;
 
-        return "$day day(s) $hour hour(s) $minutes minute(s) $seconds second(s)";
+        $day = $day > 0 ? $day . ' day(s)' : '';
+        $hour = $hour > 0 ? $hour . ' hr(s)' : '';
+        $minutes = $minutes > 0 ? $minutes . ' min(s)' : '';
+        $seconds = $seconds > 0 ? $seconds . ' sec(s)' : '';
+
+        return "$day  $hour  $minutes  $seconds ";
 
     }
 
-public function x($ticket_id) {
+    public function x($ticket_id)
+    {
 
-	echo "=== Start Aladin testing ===<br>";
-	$actions = $this->get_actions($ticket_id);
-	$actions_reversed = array_reverse($actions->actions);
+        echo "=== Start Aladin testing ===<br>";
+        $actions = $this->get_actions($ticket_id);
+        $actions_reversed = array_reverse($actions->actions);
 
-	$temp = array();
-	$statuses = ["New", "New Request", "Quote Processing", "Awaiting Approval", "Approved", "With Supplier", "Computer Preparation", "Pending Deployment", "Resolved"];
+        $temp = array();
+        $statuses = ["New", "New Request", "Quote Processing", "Awaiting Approval", "Approved", "With Supplier", "Computer Preparation", "Pending Deployment", "Resolved"];
 
-	foreach($actions_reversed as $action) {
-		if(in_array($action->new_status_name, $statuses)) {
-			array_push($temp, $action);
-		}
-	}
-	$timeline = array();
+        foreach ($actions_reversed as $action) {
+            if (in_array($action->new_status_name, $statuses)) {
+                array_push($temp, $action);
+            }
+        }
+        $timeline = array();
 
-	for($i=0; $i<count($temp); $i++) {
-		if($i==0) {
-			array_push($timeline, $temp[$i]);
-		}
-		else {
-			if($timeline[count($timeline)-1]->new_status_name != $temp[$i]->new_status_name) {
-				array_push($timeline, $temp[$i]);
-			}
-		}
-	}
+        for ($i = 0; $i < count($temp); $i++) {
+            if ($i == 0) {
+                array_push($timeline, $temp[$i]);
+            } else {
+                if ($timeline[count($timeline) - 1]->new_status_name != $temp[$i]->new_status_name) {
+                    array_push($timeline, $temp[$i]);
+                }
+            }
+        }
 
-	foreach($timeline as $action) {
-		echo $action->new_status_name;
-		echo "|" . $action->datetime . "<br>";
-	}
+        foreach ($timeline as $action) {
+            echo $action->new_status_name;
+            echo "|" . $action->datetime . "<br>";
+        }
 
-	echo "=== End Aladin Testing ===";
+        echo "=== End Aladin Testing ===";
 
-}
+    }
 
     /**
      * Returns timeline data for a ticket
@@ -384,9 +389,16 @@ public function x($ticket_id) {
      */
     public function get_timeline($ticket_id)
     {
-	//$this->x($ticket_id);
+        $data = new \stdClass();
         // get the actions for the ticket
         $actions = $this->get_actions($ticket_id);
+        // If no actions, return false
+        if ($actions->record_count == 0) {
+            $data->timeline = false;
+            $data->number_of_items = 0;
+            return $data;
+        }
+
         // Put actions in decending order
         $actions_reversed = array_reverse($actions->actions);
         // Get all accepted statuses
@@ -405,15 +417,17 @@ public function x($ticket_id) {
                 in_array($action->new_status, $accepted_statuses) &&
                 ($i == 0 || $action->new_status != $actions_reversed[$compare_key]->new_status)
             ) {
-                $timeline[$i]['date'] = isset($action->datetime) ? date(
-                    'M j, Y h:i A',
-                    $this->convert_halo_date_to_timestamp($action->datetime)
-                ) : '';
+                $timeline[$i]['date'] = $action->new_status_name;
                 $timeline[$i]['timestamp'] = isset($action->datetime) ? $this->convert_halo_date_to_timestamp
                 ($action->datetime
                 ) : 0;
-                $timeline[$i]['content'] = '<h4><span class="badge badge-success text-light">Completed</span></h4>' .
-                    $action->new_status_name;
+                $timeline[$i]['content'] = '<h5><span class="badge badge-success text-light">Completed</span></h5>';
+                $timeline[$i]['content'] .= '<span style="font-size: 0.8rem;"><i class="nav-icon bi-alarm"></i> Start: ';
+                $timeline[$i]['content'] .= isset($action->datetime) ? date(
+                    'M j, Y h:i A',
+                    $this->convert_halo_date_to_timestamp($action->datetime)
+                ) : '';
+                $timeline[$i]['content'] .= '</span>';
                 $timeline[$i]['status_id'] = $action->new_status;
                 $compare_key = $i;
             }
@@ -421,18 +435,41 @@ public function x($ticket_id) {
         }
         //Reset array keys
         $timeline = array_values($timeline);
-//        print_object($timeline);
+        // Add time taken to last status
+        for ($t = 0; $t < count($timeline); $t++) {
+            if (isset($timeline[$t + 1]['timestamp'])) {
+                $time_taken_for_step = $this->convert_seconds_to_days(
+                    ($timeline[$t + 1]['timestamp'] - $timeline[$t]['timestamp'])
+                );
+                $timeline[$t]['content'] .= '<br><span style="font-size: 0.8rem;"><i class="nav-icon bi-clock-history"></i> Duration: '
+                    . $time_taken_for_step . '</span>';
+            } else {
+                // If this is the last key and the status is not completed
+                // Else if this is the last key and the status is completed
+                if ($t == count($timeline) - 1 && $timeline[$t]['status_id'] != $accepted_statuses[$last_status_type_key]) {
+                    $time_taken_for_step = $this->convert_seconds_to_days(
+                        (time() - $timeline[$t]['timestamp'])
+                    );
+                    $timeline[$t]['content'] .= '<br><span style="font-size: 0.8rem;"><i class="nav-icon bi-clock-history"></i> Duration: '
+                        . $time_taken_for_step . '</span>';
+                } elseif ($t == count($timeline) - 1 && $timeline[$t]['status_id'] == $accepted_statuses[$last_status_type_key]) {
+                    $time_taken_for_step = $this->convert_seconds_to_days(
+                        ($timeline[$t]['timestamp'] - $timeline[0]['timestamp'])
+                    );
+                    $timeline[$t]['content'] = '<h5><span class="badge badge-success text-light">Completed</span></h5>'
+                        . '<span style="font-size: 0.8rem;"><i class="nav-icon bi-alarm"></i> Resolved: '
+                        . date('M j, Y h:i A', $timeline[$t]['timestamp'])
+                        . '<br><span style="font-size: 0.8rem;"><i class="nav-icon bi-clock-history"></i> Ticket duration: '
+                        . $time_taken_for_step . '</span>';
+                }
+            }
+        }
+
         // Get last key
         if (count($timeline) > 0) {
             $last_key = count($timeline) - 1;
         } else {
             $last_key = 0;
-        }
-
-        if (count($timeline) > 1) {
-            $time_taken = $timeline[$last_key]['timestamp'] - $timeline[0]['timestamp'];
-        } else {
-            $time_taken = 0;
         }
 
         // Get last key Status
@@ -448,32 +485,30 @@ public function x($ticket_id) {
         // Make the last status in timeline In Progress if not completed
         if (count($timeline) > 0 && $timeline[$last_key]['status_id'] != $accepted_statuses[$last_status_type_key]) {
             $timeline[$last_key]['content'] = str_replace(
-                '<h4><span class="badge badge-success text-light">Completed</span></h4>',
-                '<h4><span class="badge badge-info text-light">In Progress</span></h4>',
+                '<span class="badge badge-success text-light">Completed</span>',
+                '<span class="badge badge-info text-light">In Progress</span>',
                 $timeline[$last_key]['content']);
 
             // Add remaining steps in timeline
             $z = count($timeline);
             for ($x = $status_start_key + 1; $x < count($accepted_statuses); $x++) {
-                $timeline[$z]['date'] = '<h4><span class="badge badge-warning text-light">Pending</span></h4>';
+                $timeline[$z]['date'] = $this->get_status($accepted_statuses[$x])->name;
                 $timeline[$z]['timestamp'] = 0;
-                $timeline[$z]['content'] = $this->get_status($accepted_statuses[$x])->name;
+                $timeline[$z]['content'] = '<h5><span class="badge badge-warning text-light">Pending</span></h5>';
                 $timeline[$z]['status_id'] = $accepted_statuses[$x];
                 $z++;
             }
         } else {
             // Add remaining steps in timeline
             for ($x = $i + 1; $x < count($accepted_statuses); $x++) {
-                $timeline[$x]['date'] = '<h4><span class="badge badge-warning text-light">Pending</span></h4>';
+                $timeline[$x]['date'] = $this->get_status($accepted_statuses[$x])->name;
                 $timeline[$x]['timestamp'] = 0;
-                $timeline[$x]['content'] = $this->get_status($accepted_statuses[$x])->name;
+                $timeline[$x]['content'] = '<h4><span class="badge badge-warning text-light">Pending</span></h4>';
                 $timeline[$x]['status_id'] = $accepted_statuses[$x];
             }
         }
 
-        $data = new \stdClass();
         $data->timeline = $timeline;
-        $data->time_taken = $time_taken;
         $data->number_of_items = count($timeline);
 
         return $data;

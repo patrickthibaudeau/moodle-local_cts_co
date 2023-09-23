@@ -52,6 +52,7 @@ $string['summary_title'] = 'New computer order';
 $string['tenant'] = 'Tenant';
 $string['tenant_help'] = 'tenant provided by HALO ITSM';
 $string['ticket'] = 'Ticket';
+$string['ticket_not_found'] = 'Sorry, I couldn\'t find the ticket you were looking for. Please enter a valid ticket number.';
 $string['timeline'] = 'Status Timeline';
 $string['timezone_adjustment'] = 'Timezone adjustment';
 $string['timezone_adjustment_help'] = 'HALO can return the date in a different timezone. The number of hour difference is the number required here.';

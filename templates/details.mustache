@@ -1,34 +1,39 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <div class="row mt-3">
     <div class="col">
-<input type="hidden" id="number-of-items" value="{{number_of_items}}">
+        <input type="hidden" id="number-of-items" value="{{number_of_items}}">
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div  class="col-8">
+                    <div class="col-8">
                         <h1>SR-{{ticket_id}}</h1>
-                </div>
-                                    <div class="col-4 d-flex justify-content-end">
-                                        <div class="form-inline">
-                                        <input
-                                                type="text"
-                                                class="form-control "
-                                                id="ticket_id"
-                                                placeholder="Enter Ticket Number"
-                                        >
-                                            &nbsp;
-                                        <button type="button" class="btn btn-primary" id="get_ticket_details">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                        </div>
-                                    </div>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <div class="form-inline">
+                            <input
+                                    type="text"
+                                    class="form-control "
+                                    id="ticket_id"
+                                    placeholder="Enter Ticket Number"
+                            >
+                            &nbsp;
+                            <button type="button" class="btn btn-primary" id="get_ticket_details">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
                 <h3 class="mb-3">{{#str}}timeline, local_cts_co{{/str}}</h3>
                 <input type="hidden" id="timeline" value="{{timeline}}">
-                <div id="my-timeline"></div>
-                <div class="alert alert-info mt-3" style="text-align: center;">
-                    {{{time_taken}}}
+                <div id="my-timeline">
+                    {{^timeline}}
+                        <div class="alert alert-danger">
+                        {{#str}}ticket_not_found, local_cts_co{{/str}}
+                        </div>
+                    {{/timeline}}
+                </div>
             </div>
         </div>
     </div>

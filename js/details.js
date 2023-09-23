@@ -6,22 +6,24 @@ $(document).ready(function () {
     if (numberOfItems > 9) {
         numberOfItems = 9;
     }
-    $('#my-timeline').roadmap(events, {
-        eventsPerSlide: numberOfItems,
-        slide: 1,
-        prevArrow: '<i class="fa fa-angle-left"></i>',
-        nextArrow: '<i class="fa fa-angle-right"></i>',
-        onBuild: function() {
-            console.log('onBuild event')
-        }
-    });
+    if (numberOfItems != 0) {
+        $('#my-timeline').roadmap(events, {
+            eventsPerSlide: numberOfItems,
+            slide: 1,
+            prevArrow: '<i class="fa fa-angle-left"></i>',
+            nextArrow: '<i class="fa fa-angle-right"></i>',
+            onBuild: function () {
+                console.log('onBuild event')
+            }
+        });
+    }
 
     $('#get_ticket_details').off();
     $('#get_ticket_details').on('click', function () {
         search_ticket();
     });
 
-    $("input").on("keypress", function(event) {
+    $("input").on("keypress", function (event) {
         if (event.which === 13) {
             search_ticket();
         }

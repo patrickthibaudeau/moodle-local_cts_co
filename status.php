@@ -18,6 +18,8 @@ $id = required_param('id', PARAM_INT);
 $PAGE->requires->css('/local/cts_co/css/jquery.roadmap.min.css');
 $PAGE->requires->js('/local/cts_co/js/jquery.roadmap.min.js', true);
 $PAGE->requires->js('/local/cts_co/js/details.js', true);
+$PAGE->requires->css(new moodle_url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'));
+$PAGE->requires->css('/local/cts_co/css/status.css');
 //**************** ******
 //*** DISPLAY HEADER ***
 //**********************

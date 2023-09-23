@@ -52,15 +52,14 @@ class details implements \renderable, \templatable
         $HALO = new haloitsm();
 
         $timeline_data = $HALO->get_timeline($this->id);
-        $time_taken = 'Not available';
-        if ($timeline_data->time_taken !=0) {
-           $time_taken = $HALO->convert_seconds_to_days($timeline_data->time_taken);
+        if ($timeline_data->number_of_items == 0) {
+            $timeline = false;
+        } else {
+            $timeline = json_encode($timeline_data->timeline);
         }
-
         $data = [
             'ticket_id' => $this->id,
-            'timeline' => json_encode($timeline_data->timeline),
-            'time_taken' => $time_taken,
+            'timeline' => $timeline,
             'number_of_items' => $timeline_data->number_of_items,
         ];
 
