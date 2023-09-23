@@ -15,7 +15,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2023091800;
+$plugin->version = 2023092200;
 $plugin->component = 'local_cts_co';
 $plugin->release = '2.0 (Release 2)';
 $plugin->requires = 2022041904;
